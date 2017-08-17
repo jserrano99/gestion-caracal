@@ -1,0 +1,51 @@
+ModelBundle\Entity\Usuarios:
+    type: entity
+    table: usuarios
+    indexes:
+        usuario_username:
+            columns:
+                - login
+        usuario_idNivel:
+            columns:
+                - perfil
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        login:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        perfil:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+        email:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }
