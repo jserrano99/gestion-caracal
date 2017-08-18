@@ -33,9 +33,54 @@ class PersonaController extends Controller
             "Personas" => $Personas
         ));   
     }
-    public function AddAction(){
+    public function AddAction(Request $request){
+       $EntityManager = $this->getDoctrine()->getManager();
+       $Persona_repo = $EntityManager->getRepository("PersonaBundle:Persona");
+       $Provincia_repo = $EntityManager->getRepository("CataBundle:Provincia");
+       $Localidad_repo = $EntityManager->getRepository("CataBundle:Localidad");
+       
+       $Persona = new Persona(); 
+       
+       $PersonaForm =  $this->createForm(PersonaType::class, $Persona);
+       $PersonaForm->handleRequest($request);
+        if ($PersonaForm->isSubmitted()){
+           if ($PersonaForm->isValid()){
+               $newPersona = new Persona();
+               $newPersona->setNif($PersonaForm->get('nif')->getData());
+               $newPersona->setNombre($PersonaForm->get('nombre')->getData());
+               $newPersona->setApellido1($PersonaForm->get('apellido1')->getData());
+               $newPersona->setApellido2($PersonaForm->get('apellido2')->getData());
+               $newPersona->setFcnac($PersonaForm->get('fcnac')->getData());
+               $newPersona->setEmail($PersonaForm->get('email')->getData());
+               $newPersona->setDomicilio($PersonaForm->get('domicilio')->getData());
+               $newPersona->setCdpostal($PersonaForm->get('cdpostal')->getData());
+               $newPersona->setMovil($PersonaForm->get('movil')->getData());
+               $newPersona->setTelefono($PersonaForm->get('telefono')->getData());
+               
+               $Provincia = $Provincia_repo->find($PersonaForm->get('provincia')->getData());
+               $newPersona->setProvincia($Provincia);
+               
+               $Localidad = $Localidad_repo->find($PersonaForm->get('localidad')->getData());
+               $newPersona->setProvincia($Localidad);
+               
+               $EntityManager->persist($newPersona);
+                $flush = $EntityManager->flush();
+                 if ($flush == null ) {
+                    $status = 'Persona Generada Correctamente';
+                 } else  {
+                    $status = 'Error en Modificación';
+                 }
+                $this->sesion->getFlashBag()->add("status",$status);
+                return $this->redirectToRoute("queryPersona");
+                
+           }
+        }
         
+        return $this->render("PersonaBundle::insert.html.twig", array(
+            "form" => $PersonaForm->createView()
+        ));        
     }
+        
     public function EditAction(Request $request, $id) {
        $EntityManager = $this->getDoctrine()->getManager();
        $Persona_repo = $EntityManager->getRepository("PersonaBundle:Persona");
@@ -78,13 +123,11 @@ class PersonaController extends Controller
         }
         
         return $this->render("PersonaBundle::update.html.twig", array(
-            "form" => $LocalidadForm->createView(),
+            "form" => $PersonaForm->createView(),
             "Persona" => $Persona
         ));        
     }
-    public function InsertAction(){
-        
-    }
+    
     public function DeleteAction(){
         
     }
