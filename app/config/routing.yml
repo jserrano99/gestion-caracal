@@ -1,3 +1,19 @@
+cata:
+    resource: "@CataBundle/Resources/config/routing.yml"
+    prefix:   /
+
+persona:
+    resource: "@PersonaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+usuario:
+    resource: "@UsuarioBundle/Resources/config/routing.yml"
+    prefix:   /
+
+socio:
+    resource: "@SocioBundle/Resources/config/routing.yml"
+    prefix:   /
+
 gestion:
     resource: "@GestionBundle/Resources/config/routing.yml"
     prefix:   /

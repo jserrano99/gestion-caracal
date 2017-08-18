@@ -6,7 +6,11 @@
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
             "ModelBundle\\": "src/ModelBundle",
-            "GestionBundle\\": "src/GestionBundle"
+            "GestionBundle\\": "src/GestionBundle",
+            "SocioBundle\\": "src/SocioBundle",
+            "UsuarioBundle\\": "src/UsuarioBundle",
+            "PersonaBundle\\": "src/PersonaBundle",
+            "CataBundle\\": "src/CataBundle"
             
         },
         "classmap": [

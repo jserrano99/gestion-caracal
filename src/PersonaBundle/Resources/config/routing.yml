@@ -1,0 +1,16 @@
+addPersona:
+    path:   /Persona/add
+    defaults: { _controller: PersonaBundle:Persona:Add}
+queryPersona:
+    path:   /Persona/query
+    defaults: { _controller: PersonaBundle:Persona:Query}
+editPersona:
+    path:   /Persona/edit/{id}
+    defaults: { _controller: PersonaBundle:Persona:Edit}
+deletePersona:
+    path:   /Persona/delete/{id}
+    defaults: { _controller: PersonaBundle:Persona:Delete}
+    
+persona_homepage:
+    path:    /Persona
+    defaults: { _controller: PersonaBundle:Persona:index }
