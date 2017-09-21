@@ -1,4 +1,4 @@
-{% extends "GestionBundle::layout.html.twig" %} 
+{% extends "PersonaBundle::menu.html.twig" %} 
 {% block titulo %} GESTIÓN DE SOCIOS-CONSULTA{% endblock %}
 {% block contenido %}
     <div class="container">
@@ -7,29 +7,29 @@
                 {{message}}
             </div>
         {% endfor %}
-        <a href="{{path("addUsuario")}}" class="btn btn-success">Nuevo Socio</a>
+        <a href="{{path("addSocio")}}" class="btn btn-success">Nuevo Socio</a>
         <hr/>
         
         <table class="tabla table" border="1">
             <thead>
                 <tr class="success">
                     <th class="text-center text-bold">ID</th>
-                    <th class="text-center text-bold">Usuario</th>
+                    <th class="text-center text-bold">Nº Socio</th>
                     <th class="text-center text-bold">Nombre</th>
-                    <th class="text-center text-bold">Perfil</th>
+					<th class="text-center text-bold">Estado</th>
                     <th class="text-center text-bold">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for Socio in SocioALL %}
+                {% for Socio in Socios %}
                     <tr>
-                        <td class="text-center">{{socio.id}}</td>
-                        <td>{{Socio.ersona}}</td>
-                        <td>{{Usuario.nombre}}</td>
-                        <td>{{Usuario.perfil}}</td>
-                        <td class="text-center">
-                           <a href="{{path("editUsuario",{ "id":Usuario.id })}}" class="btn btn-success">Editar</a>
-                           <a href="{{path("deleteUsuario",{ "id":Usuario.id })}}" class="btn btn-danger">Eliminar</a>
+                        <td class="text-center">{{Socio.id}}</td>
+						<td class="text-center">{{Socio.nmsocio}}</td>
+						<td>{{Socio.persona.apenom}}</td>
+						<td class="text-center">{{Socio.estado}}</td>
+						<td class="text-center">
+                           <a href="{{path("editSocio",{ "id":Socio.id })}}" class="btn btn-success">Editar</a>
+                      
                         </td>
                     </tr>
                 {% endfor %}

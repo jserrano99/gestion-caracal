@@ -24,6 +24,8 @@ class UsuarioController extends Controller
         $authenticationUtils = $this->get("security.authentication_utils");
 		$error = $authenticationUtils->getLastAuthenticationError();
 		$lastUsername = $authenticationUtils->getLastUsername();
+//		dump($lastUsername);
+//		dump($error);
         return $this->render("UsuarioBundle::login.html.twig", array (
                 "error" => $error ,
                 "last_username" => $lastUsername

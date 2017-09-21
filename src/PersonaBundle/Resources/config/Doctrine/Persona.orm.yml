@@ -1,6 +1,7 @@
 PersonaBundle\Entity\Persona:
     type: entity
     table: personas
+    repositoryClass: PersonaBundle\Repository\PersonaRepository
     indexes:
         idx_localidad:
             columns:
@@ -77,7 +78,7 @@ PersonaBundle\Entity\Persona:
                 fixed: false
     manyToOne:
         provincia:
-            targetEntity: CataBundle\Entity\Provincia
+            targetEntity: \CataBundle\Entity\Provincia
             cascade: {  }
             fetch: LAZY
             mappedBy: null
@@ -87,7 +88,7 @@ PersonaBundle\Entity\Persona:
                     referencedColumnName: id
             orphanRemoval: false
         localidad:
-            targetEntity: CataBundle\Entity\Localidad
+            targetEntity: \CataBundle\Entity\Localidad
             cascade: {  }
             fetch: LAZY
             mappedBy: null

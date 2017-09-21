@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+<Doctrine-mapping xmlns="http://Doctrine-project.org/schemas/orm/Doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://Doctrine-project.org/schemas/orm/Doctrine-mapping http://Doctrine-project.org/schemas/orm/Doctrine-mapping.xsd">
   <entity name="Arqueros" table="arqueros">
     <indexes>
       <index name="idx_licencia" columns="licencia"/>
@@ -31,4 +31,4 @@
       </join-columns>
     </many-to-one>
   </entity>
-</doctrine-mapping>
+</Doctrine-mapping>

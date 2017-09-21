@@ -5,7 +5,13 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-    public function registerBundles()
+	
+public function __construct($environment, $debug) {
+	date_default_timezone_set('Europe/Madrid');
+	parent::__construct($environment, $debug);
+}
+
+public function registerBundles()
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -19,9 +25,12 @@ class AppKernel extends Kernel
             new ModelBundle\ModelBundle(),
             new GestionBundle\GestionBundle(),
             new SocioBundle\SocioBundle(),
-            new UsuarioBundle\UsuarioBundle(),
+            new UsuarioBundle\UsuarioBundle(), 
             new PersonaBundle\PersonaBundle(),
             new CataBundle\CataBundle(),
+            new CompeticionBundle\CompeticionBundle(),
+			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new ContabilidadBundle\ContabilidadBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

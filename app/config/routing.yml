@@ -1,13 +1,21 @@
+contabilidad:
+    resource: "@ContabilidadBundle/Resources/config/routing.yml"
+    prefix:   /
+
+usuario:
+    resource: "@UsuarioBundle/Resources/config/routing.yml"  
+    prefix:   /
+
+competicion:
+    resource: "@CompeticionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 cata:
     resource: "@CataBundle/Resources/config/routing.yml"
     prefix:   /
 
 persona:
     resource: "@PersonaBundle/Resources/config/routing.yml"
-    prefix:   /
-
-usuario:
-    resource: "@UsuarioBundle/Resources/config/routing.yml"
     prefix:   /
 
 socio:

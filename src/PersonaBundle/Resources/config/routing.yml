@@ -1,3 +1,19 @@
+
+
+    
+addArquero:
+    path:   /Arquero/add
+    defaults: { _controller: PersonaBundle:Arquero:Add}
+queryArquero:
+    path:   /Arquero/query
+    defaults: { _controller: PersonaBundle:Arquero:Query}
+editArquero:
+    path:   /Arquero/edit/{id}
+    defaults: { _controller: PersonaBundle:Arquero:Edit}
+deleteArquero:
+    path:   /Arquero/delete/{id}
+    defaults: { _controller: PersonaBundle:Arquero:Delete}
+
 addPersona:
     path:   /Persona/add
     defaults: { _controller: PersonaBundle:Persona:Add}

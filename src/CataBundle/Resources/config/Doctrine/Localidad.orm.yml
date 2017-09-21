@@ -1,6 +1,7 @@
 CataBundle\Entity\Localidad:
     type: entity
     table: localidades
+    repositoryClass: CataBundle\Repository\LocalidadRepository
     indexes:
         idx_provincia:
             columns:

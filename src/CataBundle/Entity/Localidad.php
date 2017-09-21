@@ -93,7 +93,7 @@ class Localidad
     /**
      * Set provincia
      *
-     * @param \CataBundle\Entity\Provincias $provincia
+     * @param \CataBundle\Entity\Provincia $provincia
      *
      * @return Localidades
      */
@@ -107,7 +107,7 @@ class Localidad
     /**
      * Get provincia
      *
-     * @return \CataBundle\Entity\Provincias
+     * @return \CataBundle\Entity\Provincia
      */
     public function getProvincia()
     {
