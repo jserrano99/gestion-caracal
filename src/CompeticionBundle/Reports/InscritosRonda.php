@@ -78,10 +78,10 @@ class InscritosRonda extends \FPDF {
 			$this->SetMargins(3,3);
 			$this->image($this->rootDir.'/src/img/LogoCaracal.png',2,2,25,30);
 			$this->SetFont('Arial','B',20);
-         	$this->Cell(290,5,$this->getRonda()->getCompeticion()->getDescripcion(),0,0,'C');
+         	$this->Cell(290,5,utf8_decode($this->getRonda()->getCompeticion()->getDescripcion()),0,0,'C');
             $this->Ln();
 			$this->SetFont('Arial','B',15);
-			$this->Cell(290,5,$this->getRonda()->getDescripcion(),0,0,'C');
+			$this->Cell(290,5,utf8_decode($this->getRonda()->getDescripcion()),0,0,'C');
             $this->Ln();
             $this->SetFont('Arial','B',10);
             $this->Cell(290,5,'LISTADO ALFABETICO DE INSCRITOS',0,0,'C');

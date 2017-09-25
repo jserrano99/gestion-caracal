@@ -116,6 +116,7 @@ class PartiRondaRepository extends \Doctrine\orm\EntityRepository {
 				." participantes.id as participante_id ,"
 				." participantes.dorsal, "
 				." modalidades.descripcion as modalidad , "
+                ." modalidades.id as modalidad_id ,"
 				." arqueros.id as arquero_id ,"
 				." arqueros.licencia, "
 				." personas.id as persona_id ,"
@@ -128,6 +129,7 @@ class PartiRondaRepository extends \Doctrine\orm\EntityRepository {
 				." club.descripcion as club , "
 				." federaciones.descripcion as federacion, "
 				." categorias.descripcion as categoria, "
+                ." categorias.id as categoria_id ,"
 				." participantes_rondas.inscrito , "
 				." participantes_rondas.pagado , "
 				." participantes_rondas.puntos , "
@@ -160,4 +162,22 @@ class PartiRondaRepository extends \Doctrine\orm\EntityRepository {
 		return $po;
 	}
 	
+    public function queryByParticipante($participante_id, $ronda_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+		
+		$query = " select participantes_rondas.id as id "
+                ." from participantes_rondas, rondas "
+                ." where participantes_rondas.participante_id = :participante_id "
+                ."   and participantes_rondas.ronda_id = :ronda_id";
+        
+        $stmt = $db->prepare($query);
+		$params = array(":participante_id" => $participante_id,
+                        ":ronda_id" => $ronda_id);
+		$stmt->execute($params);
+		$po = $stmt->fetch();
+		
+		return $po;
+                
+    }   
 }

@@ -1,0 +1,40 @@
+{% extends "ContabilidadBundle::menu.html.twig" %} 
+{% block titulo %} CONSULTA DE EJERCICIOS {% endblock %}
+{% block contenido %}
+    <div class="container">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <a href="{{path("addEjercicio")}}" class="btn btn-success">Nuevo Ejercicio</a>
+        <hr/>
+        
+        <table class="tabla table" border="1">
+            <thead>
+                <tr class="success">
+                    <th class="text-center text-bold">ID</th>
+                    <th class="text-center text-bold">Descripción</th>
+                    <th class="text-center text-bold">Fecha Inicio</th>
+                    <th class="text-center text-bold">Fecha Fin</th>
+                    <th class="text-center text-bold">Estado</th>
+                    <th class="text-center text-bold">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Ejercicio in Ejercicios %}
+                    <tr>
+                        <td class="text-center">{{Ejercicio.id}}</td>
+                        <td>{{Ejercicio.descripcion}}</td>
+                        <td>{{Ejercicio.fcini|date ('d/m/Y')}}</td>
+                        <td>{{Ejercicio.fcfin|date ('d/m/Y')}}</td>
+                        <td>{{Ejercicio.estadoEjercicio.descripcion}}</td>
+                        <td class="text-center">
+                           <a href="{{path("queryAsiento",{ "ejercicio_id":Ejercicio.id })}}" class="btn btn-success">Asientos</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

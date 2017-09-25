@@ -150,7 +150,7 @@ class RondaController extends Controller
 	    $Ronda_repo = $EntityManager->getRepository("CompeticionBundle:Ronda");
         $PartiRonda_repo = $EntityManager->getRepository("CompeticionBundle:PartiRonda");
 	    $Ronda = $Ronda_repo->find($id);
-	    $ParticipantesRonda = $PartiRonda_repo->queryPartiRonda($id);
+	    $ParticipantesRonda = $PartiRonda_repo->queryInscritosRonda($id,'D');
 	   
 	 	$PHPExcel = $this->get('phpexcel')->createPHPExcelObject();
 		

@@ -87,4 +87,64 @@ class ClasificacionRepository extends \Doctrine\orm\EntityRepository
 		$po = $stmt->fetchAll();
 		return $po;
 	}
+    
+    public function queryByParticipante($competicion_id,$participante_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+		
+		$query = "SELECT clasificaciones.id as id "
+				." from clasificaciones "
+				." where clasificaciones.competicion_id = :competicion_id "
+				."      and clasificaciones.participante_id = :participante_id ";
+				
+		$stmt = $db->prepare($query);
+		$params = array(":competicion_id" => $competicion_id,
+                        ":participante_id" => $participante_id);
+		$stmt->execute($params);
+		$po = $stmt->fetch();
+		return $po;
+    }
+    
+        public function queryByCompeticion($competicion_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+		
+		$query = "SELECT clasificaciones.id as id"
+				."	, clasificaciones.competicion_id as competicion_id "
+				."	, competiciones.descripcion as competicion "
+				."	, clasificaciones.modalidad_id as modalidad_id "
+				."	, modalidades.descripcion as modalidad " 
+				."	, categorias.id as categoria_id "
+				."	, categorias.descripcion as categoria "
+				."	, clasificaciones.participante_id as participante_id "
+				."  , participantes.dorsal as dorsal "
+				."	, arqueros.licencia as licencia "
+				."	, arqueros.club_id as club_id "
+				."	, club.descripcion as club "
+				."	, concat ( personas.apellido1,' ',personas.apellido2,' ',personas.nombre) as apenom "
+				."	, clasificaciones.total_puntos as total_puntos "
+				."	,clasificaciones.total_onces as total_onces"
+				."	, clasificaciones.total_dieces as total_dieces "
+				." from  "
+				."		clasificaciones , modalidades, categorias, competiciones, participantes, arqueros, personas, club "
+				." where clasificaciones.competicion_id = :competicion_id "
+				."		and competiciones.id = clasificaciones.competicion_id  "
+				."		and modalidades.id = clasificaciones.modalidad_id "
+				."		and categorias.id = clasificaciones.categoria_id"
+                ."		and participantes.id = clasificaciones.participante_id  "
+				."		and arqueros.id = participantes.arquero_id "
+				."		and personas.id = arqueros.persona_id "
+				."		and club.id = arqueros.club_id"
+				."		order by  "
+				."			modalidad_id, categoria_id, total_puntos desc, total_onces desc, total_dieces desc ";
+		
+		$stmt = $db->prepare($query);
+		$params = array(":competicion_id" => $competicion_id);
+		$stmt->execute($params);
+		$po = $stmt->fetchAll();
+		return $po;
+		
+
+    }
+
 }

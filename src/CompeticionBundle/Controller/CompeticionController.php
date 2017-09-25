@@ -71,6 +71,37 @@ class CompeticionController extends Controller
 				   $EntityManager->persist($newRonda);
 				   $flush = $EntityManager->flush();
   			    }
+                
+                
+                if ($TipoCompeticion->getId() == 3 ) { // Torneo con Clasificatorias 
+				   $newRonda = new Ronda();
+				   $newRonda->setFecha($newCompeticion->getFecha());
+				   $newRonda->setDescripcion("Fase de Clasificación");
+				   $newRonda->setActiva(1);
+				   $newRonda->setNum(1);
+				   $newRonda->setCompeticion($newCompeticion);
+				   $EntityManager->persist($newRonda);
+				   $flush = $EntityManager->flush();
+                   
+                   $newRonda = new Ronda();
+				   $newRonda->setFecha($newCompeticion->getFecha());
+				   $newRonda->setDescripcion("Semifinales");
+				   $newRonda->setActiva(0);
+				   $newRonda->setNum(2); 
+				   $newRonda->setCompeticion($newCompeticion);
+				   $EntityManager->persist($newRonda);
+				   $flush = $EntityManager->flush();
+                   
+                   $newRonda = new Ronda();
+				   $newRonda->setFecha($newCompeticion->getFecha());
+				   $newRonda->setDescripcion("Final");
+				   $newRonda->setActiva(0);
+				   $newRonda->setNum(3);
+				   $newRonda->setCompeticion($newCompeticion);
+				   $EntityManager->persist($newRonda);
+				   $flush = $EntityManager->flush();
+  			    }
+               
                
 				 
 				 $this->sesion->getFlashBag()->add("status",$status);

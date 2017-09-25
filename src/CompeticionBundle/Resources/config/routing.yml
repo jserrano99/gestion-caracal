@@ -101,12 +101,25 @@ deleteCompeticion:
     path:   /Competicion/delete/{id}
     defaults: { _controller: CompeticionBundle:Competicion:Delete}
     
-generaClasificacion:
-    path:   /Clasificacion/genera/{competicion_id}
-    defaults: { _controller: CompeticionBundle:Clasificacion:Genera}
+generaClasificatorio:
+    path:   /Clasificacion/Clasificatorio/{competicion_id}
+    defaults: { _controller: CompeticionBundle:Clasificacion:Clasificatorio}
+generaSemifinal:
+    path:   /Clasificacion/Semifinal/{competicion_id}
+    defaults: { _controller: CompeticionBundle:Clasificacion:Semifinal}
+generaFinal:
+    path:   /Clasificacion/Final/{competicion_id}
+    defaults: { _controller: CompeticionBundle:Clasificacion:Final}
+    
+generaRecorridoSimple:
+    path:   /Clasificacion/RecorridoSimple/{competicion_id}
+    defaults: { _controller: CompeticionBundle:Clasificacion:RecorridoSimple}
+    
 exportaClasificacion:
     path:   /Clasificacion/exporta/{competicion_id}
     defaults: { _controller: CompeticionBundle:Clasificacion:Exporta}
+
+    
     
 competicion_homepage:
     path:     /Competicion

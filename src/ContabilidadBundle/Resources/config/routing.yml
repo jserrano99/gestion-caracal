@@ -1,4 +1,33 @@
+queryApunte:
+    path: /Contabilidad/Apunte/Query/{asiento_id}
+    defaults: {_controller: ContabilidadBundle:Apunte:Query}
+addAsiento:
+    path: /Contabilidad/Asiento/Add/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Asiento:Add}
+editAsiento:
+    path: /Contabilidad/Asiento/Edit/{id}/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Asiento:Edit}
+queryAsiento:
+    path: /Contabilidad/Asiento/Query/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Asiento:Query}
+    
+aperturaEjercicio:
+    path: /Contabilidad/Ejercicio/Apertura/{id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Apertura}
+cierreEjercicio:
+    path: /Contabilidad/Ejercicio/Cierre/{id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Cierre}
+addEjercicio:
+    path: /Contabilidad/Ejercicio/Add
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Add}
+editEjercicio:
+    path: /Contabilidad/Ejercicio/Edit/{id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Edit}
+queryEjercicio:
+    path: /Contabilidad/Ejercicio/Query
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Query}
+    
 contabilidad_homepage:
-    path:     /Contabilidad
+    path: /Contabilidad
     defaults: { _controller: ContabilidadBundle:Contabilidad:index }
   

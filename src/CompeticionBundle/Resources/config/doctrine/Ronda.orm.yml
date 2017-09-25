@@ -1,6 +1,7 @@
 CompeticionBundle\Entity\Ronda:
     type: entity
     table: rondas
+    repositoryClass: CompeticionBundle\Repository\RondaRepository
     indexes:
         idx_competicion:
             columns:
