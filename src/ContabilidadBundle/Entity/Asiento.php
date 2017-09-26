@@ -45,12 +45,16 @@ class Asiento
     /**
      * @var \ContabilidadBundle\Entity\Ejercicio
      */
-    private $ejercicio;
+    private $ejercicio; 
 
     /**
      * @var \ContabilidadBundle\Entity\Proyecto
      */
     private $proyecto;
+    
+    public function __toString() {
+        return "Asiento Nº:".$this->numero."--".$this->descripcion;
+    }
 
     /**
      * Get id

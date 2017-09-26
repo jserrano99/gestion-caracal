@@ -36,7 +36,6 @@ class CompeticionController extends Controller
        $TipoCompeticion_repo = $EntityManager->getRepository("CataBundle:TipoCompeticion");
        
        $Competicion = new Competicion(); 
-       
        $CompeticionForm =  $this->createForm(CompeticionType::class, $Competicion);
        $CompeticionForm->handleRequest($request);
 	   

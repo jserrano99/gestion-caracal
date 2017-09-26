@@ -144,7 +144,7 @@ class Ejercicio
         return $this;
     }
 
-    /**
+    /** 
      * Get estado
      *
      * @return integer
