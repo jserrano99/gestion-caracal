@@ -100,7 +100,8 @@ editCompeticion:
 deleteCompeticion:
     path:   /Competicion/delete/{id}
     defaults: { _controller: CompeticionBundle:Competicion:Delete}
-    
+    options: 
+        expose: true
 generaClasificatorio:
     path:   /Clasificacion/Clasificatorio/{competicion_id}
     defaults: { _controller: CompeticionBundle:Clasificacion:Clasificatorio}

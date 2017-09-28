@@ -1,0 +1,31 @@
+<script>
+    function EliminarAsiento(id) {
+            bootbox.confirm("Confirmar el Eliminar Asiento " + id, 
+                 function(result){
+                     if (result) {
+                        var url =Routing.generate("deleteAsiento",{"id":id},true);
+                        window.location = url;                     
+                    } 
+                 });
+    }
+    
+    function EliminarProyecto(id) {
+            bootbox.confirm("Confirmar el Eliminar Asiento " + id, 
+                 function(result){
+                     if (result) {
+                        var url =Routing.generate("deleteProyecto",{"id":id},true);
+                        window.location = url;
+                    } 
+                 });
+    }
+    
+    function CerrarEjercicio(id) {
+            bootbox.confirm("Confirmar el Cierre de Ejercicio " + id, 
+                 function(result){
+                     if (result) {
+                        var url =Routing.generate("cerrarEjercicio",{"id":id},true);
+                        window.location = url;                     } 
+                 });
+    }
+</script>
+

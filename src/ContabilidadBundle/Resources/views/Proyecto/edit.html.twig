@@ -1,7 +1,7 @@
 {% extends "ContabilidadBundle::menu.html.twig" %} 
-{% block titulo %} EJERCICIOS: NUEVO EJERCICIO 
-    <br>
-    <a href="{{path("queryEjercicio")}}" class="btn btn-success">Volver</a>
+{% block titulo %} Proyecto: {{Proyecto.descripcion}} 
+    <a href="{{path("queryProyecto")}}" class="btn btn-success">Volver</a>
+    <hr/>
 {% endblock %}
     
 {% block contenido %}

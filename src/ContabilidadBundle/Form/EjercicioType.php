@@ -37,18 +37,6 @@ class EjercicioType extends AbstractType
                                     "attr" => array (
                                         'class' => 'form-control js-datepicker',
                                         'data-date-format' => 'dd-mm-yyyy')))
-                ->add('asientoApertura', EntityType::class, array(
-                                    "label"=> 'Asiento Apertura',
-                                    "class" => 'ContabilidadBundle:Asiento',
-                                    "attr" => array("class" => "form-control")))
-    			->add('asientoCierre', EntityType::class, array(
-                                    "label"=> 'Asiento Cierre',
-                                    "class" => 'ContabilidadBundle:Asiento',
-                                    "attr" => array("class" => "form-control")))
-    			->add('asientoRegularizacion', EntityType::class, array(
-                                    "label"=> 'Asiento Regularización',
-                                    "class" => 'ContabilidadBundle:Asiento',
-                                    "attr" => array("class" => "form-control")))
                 ->add('estadoEjercicio', EntityType::class, array(
                                     "label"=> 'Estado Ejercicio',
                                     "class" => 'ContabilidadBundle:EstadoEjercicio',

@@ -31,6 +31,7 @@ public function registerBundles()
             new CompeticionBundle\CompeticionBundle(),
 			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new ContabilidadBundle\ContabilidadBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

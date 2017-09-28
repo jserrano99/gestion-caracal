@@ -1,3 +1,7 @@
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    type: xml
+    
 contabilidad:
     resource: "@ContabilidadBundle/Resources/config/routing.yml"
     prefix:   /

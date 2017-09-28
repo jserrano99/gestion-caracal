@@ -1,6 +1,10 @@
 {% extends "ContabilidadBundle::menu.html.twig" %} 
-{% block titulo %} CONSULTA DE ASIENTOS : Ejercicio {{Ejercicio.descripcion}} {% endblock %}
+{% block titulo %} CONSULTA DE ASIENTOS : Ejercicio {{Ejercicio.descripcion}} 
+    <a href="{{path("queryEjercicio")}}" class="btn btn-success">Volver</a>
+{% endblock %}
 {% block contenido %}
+    {%include 'ContabilidadBundle::funciones.html.twig'%}
+
     <div class="container-fluid">
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">
@@ -34,6 +38,8 @@
                               class="btn btn-success">Editar</a>
                            <a href="{{path("queryApunte",{ "asiento_id":Asiento.id})}}" 
                               class="btn btn-warning">Apuntes</a>
+                           <input type="button" 
+                                  class="btn btn-danger" value="Eliminar" onClick="EliminarAsiento({{Asiento.id}})">   
                         </td>
                     </tr>
                 {% endfor %}

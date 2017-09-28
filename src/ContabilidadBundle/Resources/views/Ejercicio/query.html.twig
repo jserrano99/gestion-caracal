@@ -1,6 +1,7 @@
 {% extends "ContabilidadBundle::menu.html.twig" %} 
 {% block titulo %} CONSULTA DE EJERCICIOS {% endblock %}
 {% block contenido %}
+    {%include 'ContabilidadBundle::funciones.html.twig'%}
     <div class="container">
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">
@@ -9,7 +10,7 @@
         {% endfor %}
         <a href="{{path("addEjercicio")}}" class="btn btn-success">Nuevo Ejercicio</a>
         <hr/>
-        {%include 'ContabilidadBundle:Ejercicio:funciones.html.twig'%}
+        
         <table class="tabla table" border="1">
             <thead>
                 <tr class="success">
@@ -33,9 +34,12 @@
                            <a href="{{path("queryAsiento",{ "ejercicio_id":Ejercicio.id })}}" 
                               class="btn btn-success">Asientos</a>
                            <a href="{{path("editEjercicio",{ "id":Ejercicio.id })}}" 
-                              class="btn btn-success">Editar</a>
+                              class="btn btn-warning">Editar</a>
                            <input type="button" id="boton-cierre" 
                                   class="btn btn-danger" value="Cerrar" onClick="CerrarEjercicio({{Ejercicio.id}})">
+                           <a href="{{path("estableceEjercicio",{ "ejercicio_id":Ejercicio.id })}}" 
+                              class="btn btn-info">Actual</a>
+                           
                         </td>
                     </tr>
                 {% endfor %} 

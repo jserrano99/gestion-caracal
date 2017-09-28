@@ -19,6 +19,21 @@ class EjercicioController extends Controller
         $this->sesion = new Session();
     }
 
+    public function ActualAction($ejercicio_id){
+        $EntityManager = $this->getDoctrine()->getManager();
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $EjercicioActual->setEjercicio($Ejercicio);
+        $EntityManager->persist($EjercicioActual);
+        $EntityManager->flush();
+        
+        $status = "EJERCICIO ". $Ejercicio->getDescripcion()." ESTABLECIDO COMO ACTUAL";
+        $this->sesion->getFlashBag()->add("status",$status);
+        return $this->redirectToRoute("queryEjercicio");
+    }
+
     public function QueryAction() { 
         $em = $this->getDoctrine()->getManager();
         $Ejercicio_repo = $em->getRepository("ContabilidadBundle:Ejercicio");
@@ -35,7 +50,7 @@ class EjercicioController extends Controller
         $Ejercicio = new Ejercicio();
         $EjercicioForm =  $this->createForm(EjercicioType::class, $Ejercicio);
         $EjercicioForm->handleRequest($request);
-        if ($CompeticionForm->isSubmitted()){
+        if ($EjercicioForm->isSubmitted()){
             $Ejercicio = new Ejercicio();
             $Ejercicio->setDescripcion($EjercicioForm->get('descripcion')->getData());
             $Ejercicio->setFcini($EjercicioForm->get('fcini')->getData());
@@ -43,6 +58,9 @@ class EjercicioController extends Controller
      
             $EstadoEjercicio = $EstadoEjercicio_repo->find($EjercicioForm->get('estadoEjercicio')->getData());
             $Ejercicio->setEstadoEjercicio($EstadoEjercicio);
+            
+            $EntityManager->persist($Ejercicio);
+            $EntityManager->flush();
             
             $status = "EJERCICIO CREADO CORRECTAMENTE";
             $this->sesion->getFlashBag()->add("status",$status);

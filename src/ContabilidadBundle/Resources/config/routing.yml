@@ -1,15 +1,53 @@
+queryProyecto:
+    path: /Contabilidad/Proyecto/Query
+    defaults: {_controller: ContabilidadBundle:Proyecto:Query}
+addProyecto:
+    path: /Contabilidad/Proyecto/Add
+    defaults: {_controller: ContabilidadBundle:Proyecto:Add}
+editProyecto:
+    path: /Contabilidad/Proyecto/Edit/{id}
+    defaults: {_controller: ContabilidadBundle:Proyecto:Edit}
+deleteProyecto:
+    path: /Contabilidad/Proyecto/Delete/{id}
+    defaults: {_controller: ContabilidadBundle:Proyecto:Delete}
+    options:
+        expose: true
+
+addApunte:
+    path: /Contabilidad/Apunte/Add/{asiento_id}
+    defaults: {_controller: ContabilidadBundle:Apunte:Add}
+editApunte:
+    path: /Contabilidad/Apunte/Edit/{id}
+    defaults: {_controller: ContabilidadBundle:Apunte:Edit}
+deleteApunte:
+    path: /Contabilidad/Apunte/Delete/{id}
+    defaults: {_controller: ContabilidadBundle:Apunte:Delete}
+    options:
+        expose: true
 queryApunte:
     path: /Contabilidad/Apunte/Query/{asiento_id}
     defaults: {_controller: ContabilidadBundle:Apunte:Query}
+
+
 addAsiento:
     path: /Contabilidad/Asiento/Add/{ejercicio_id}
     defaults: {_controller: ContabilidadBundle:Asiento:Add}
 editAsiento:
     path: /Contabilidad/Asiento/Edit/{id}/{ejercicio_id}
     defaults: {_controller: ContabilidadBundle:Asiento:Edit}
+deleteAsiento:
+    path: /Contabilidad/Asiento/Delete/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Asiento:Delete}
+    options:
+        expose: true
 queryAsiento:
     path: /Contabilidad/Asiento/Query/{ejercicio_id}
-    defaults: {_controller: ContabilidadBundle:Asiento:Query}
+    defaults: {_controller: ContabilidadBundle:Asiento:Query, ejercicio_id: null }
+
+
+estableceEjercicio:
+    path: /Contabilidad/Ejercicio/Actual/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Actual}
     
 aperturaEjercicio:
     path: /Contabilidad/Ejercicio/Apertura/{id}
@@ -17,6 +55,8 @@ aperturaEjercicio:
 cierreEjercicio:
     path: /Contabilidad/Ejercicio/Cierre/{id}
     defaults: {_controller: ContabilidadBundle:Ejercicio:Cierre}
+    options:
+        expose: true
 addEjercicio:
     path: /Contabilidad/Ejercicio/Add
     defaults: {_controller: ContabilidadBundle:Ejercicio:Add}
