@@ -43,7 +43,7 @@ class SobrePatrulla extends \FPDF {
            	$this->SetMargins(3,3);
 			$this->image($this->getRootDir().'/src/img/LogoCaracal.png',10,10,60,60);
 	        $this->Ln(30);
-            $this->SetFont('Arial','B',18);
+            $this->SetFont('arial','B',18);
             $this->Cell(65,7,'',0,0,'C'); // relleno de la cabecera
             $this->MultiCell(160,7, utf8_decode($this->getRonda()->getCompeticion()->getDescripcion()),0,'C'); // relleno de la cabecera
             $this->Ln();
@@ -56,7 +56,7 @@ class SobrePatrulla extends \FPDF {
      
         if ($patrullaAnt !="") {
             $this->SetFillColor(230);
-            $this->SetFont('Arial','B',64);
+            $this->SetFont('arial','B',64);
             $this->Ln();
             
             $this->Cell(85,7,'',0,0,'C'); 
@@ -66,14 +66,14 @@ class SobrePatrulla extends \FPDF {
             $borde = 1;
             $this->SetFillColor(230);
             $relleno = true;
-            $this->SetFont('Arial','B',7);
+            $this->SetFont('arial','B',7);
             $this->Cell(15,$ancho,utf8_decode('DORSAL'),$borde,0,'C',$relleno);
             $this->Cell(80,$ancho,'NOMBRE Y APELLIDOS',$borde,0,'C',$relleno);
             $this->Cell(18,$ancho,utf8_decode('Nº LICENCIA'),$borde,0,'C',$relleno);
             $this->Cell(55,$ancho,'CLUB',$borde,0,'C',$relleno);
             $this->Cell(40,$ancho,utf8_decode('CATEGORÍA'),$borde,0,'C',$relleno);
             $this->Cell(45,$ancho,'MODALIDAD',$borde,0,'C',$relleno);
-            $this->SetFont('Arial','',8);
+            $this->SetFont('arial','',8);
             $this->Ln();
         }
     }
@@ -83,7 +83,7 @@ class SobrePatrulla extends \FPDF {
 		$this->AliasNbPages(); // ESTO NOS DEFINE EL NÚMERO TOTAL DE PÁGINAS DEL LISTADO
 		$this->SetMargins(3,3);
 		$this->AddPage();
-		$this->SetFont('Arial','',7);
+		$this->SetFont('arial','',7);
 		$patrullaAnt="";
 
 		foreach ($miembrosPatrulla as $miembro) {

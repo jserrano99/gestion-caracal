@@ -1,3 +1,32 @@
+libroMayor:
+    path: /Contabilidad/Informes/LibroMayor/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:LibroMayor, ejercicio_id: null}
+libroDiario:
+    path: /Contabilidad/Informes/LibroDiario/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:LibroDiario, ejercicio_id: null}
+repBalance:
+    path: /Contabilidad/Informes/Balance/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:Balance, ejercicio_id: null}
+repCuentaResultados:
+    path: /Contabilidad/Informes/CuentaResultados/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:CuentaResultados, ejercicio_id: null}
+    
+     
+addCuentaMayor:
+    path: /Contabilidad/CuentaMayor/Add
+    defaults: {_controller: ContabilidadBundle:CuentaMayor:Add}
+editCuentaMayor:
+    path: /Contabilidad/CuentaMayor/Edit/{id}
+    defaults: {_controller: ContabilidadBundle:CuentaMayor:Edit}
+deleteCuentaMayor:
+    path: /Contabilidad/CuentaMayor/Delete/{id}
+    defaults: {_controller: ContabilidadBundle:CuentaMayor:Delete}
+    options:
+        expose: true
+queryCuentaMayor:
+    path: /Contabilidad/CuentaMayor/Query
+    defaults: {_controller: ContabilidadBundle:CuentaMayor:Query}
+
 queryProyecto:
     path: /Contabilidad/Proyecto/Query
     defaults: {_controller: ContabilidadBundle:Proyecto:Query}
@@ -29,14 +58,27 @@ queryApunte:
     defaults: {_controller: ContabilidadBundle:Apunte:Query}
 
 
-addAsiento:
-    path: /Contabilidad/Asiento/Add/{ejercicio_id}
-    defaults: {_controller: ContabilidadBundle:Asiento:Add}
+addAsientoFactura:
+    path: /Contabilidad/AsientoFactura/Add
+    defaults: {_controller: ContabilidadBundle:AsientoFactura:Add}
+addAsientoTraspaso:
+    path: /Contabilidad/AsientoTraspaso/Add
+    defaults: {_controller: ContabilidadBundle:AsientoTraspaso:Add}
+addAsientoGasto:
+    path: /Contabilidad/AsientoGasto/Add
+    defaults: {_controller: ContabilidadBundle:AsientoGasto:Add}
+addAsientoIngreso:
+    path: /Contabilidad/AsientoIngreso/Add
+    defaults: {_controller: ContabilidadBundle:AsientoIngreso:Add}
+addAsientoGenerico:
+    path: /Contabilidad/AsientoGenerico/Add
+    defaults: {_controller: ContabilidadBundle:AsientoGenerico:Add}
+
 editAsiento:
     path: /Contabilidad/Asiento/Edit/{id}/{ejercicio_id}
     defaults: {_controller: ContabilidadBundle:Asiento:Edit}
 deleteAsiento:
-    path: /Contabilidad/Asiento/Delete/{ejercicio_id}
+    path: /Contabilidad/Asiento/Delete/{id}
     defaults: {_controller: ContabilidadBundle:Asiento:Delete}
     options:
         expose: true

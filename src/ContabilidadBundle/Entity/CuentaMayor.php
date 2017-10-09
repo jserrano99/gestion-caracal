@@ -32,7 +32,9 @@ class CuentaMayor
      */
     private $tipoCuenta;
 
-
+    public function __toString() {
+        return $this->codigo.":".$this->descripcion;
+    }
     /**
      * Get id
      *

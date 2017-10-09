@@ -1,4 +1,4 @@
-{% extends "ContabilidadBundle::menu.html.twig" %} 
+{% extends "ContabilidadBundle:Asiento:menu.html.twig" %} 
 {% block titulo %} CONSULTA DE ASIENTOS : Ejercicio {{Ejercicio.descripcion}} 
     <a href="{{path("queryEjercicio")}}" class="btn btn-success">Volver</a>
 {% endblock %}
@@ -11,7 +11,6 @@
                 {{message}}
             </div>
         {% endfor %}
-        <a href="{{path("addAsiento",{"ejercicio_id":Ejercicio.id})}}" class="btn btn-success">Nuevo Asiento</a>
         <hr/>
         
         <table class="tabla table" border="1">
@@ -29,7 +28,8 @@
                 {% for Asiento in Asientos %}
                     <tr>
                         <td class="text-center">{{Asiento.numero}}</td>
-                        <td class="text-center">{{Asiento.fecha| date('d/m/Y')}}</td>
+                        <td class="text-center">
+                            <span style="display:none;">{{Asiento.fecha}}</span>{{Asiento.fecha| date('d/m/Y')}}</td>
                         <td>{{Asiento.descripcion}}</td>
                         <td class="text-right">{{Asiento.importeDebe|number_format(2,',','.')}} €</td>
                         <td class="text-right">{{Asiento.importeHaber|number_format(2,',','.')}} €</td>

@@ -10,7 +10,7 @@
     }
     
     function EliminarProyecto(id) {
-            bootbox.confirm("Confirmar el Eliminar Asiento " + id, 
+            bootbox.confirm("Confirmar el Eliminar Proyecto " + id, 
                  function(result){
                      if (result) {
                         var url =Routing.generate("deleteProyecto",{"id":id},true);

@@ -26,9 +26,11 @@
                 {% for Ejercicio in Ejercicios %}
                     <tr>
                         <td class="text-center">{{Ejercicio.id}}</td>
-                        <td>{{Ejercicio.descripcion}}</td>
-                        <td>{{Ejercicio.fcini|date ('d/m/Y')}}</td>
-                        <td>{{Ejercicio.fcfin|date ('d/m/Y')}}</td>
+                        <td class="text-center">{{Ejercicio.descripcion}}</td>
+                        <td class="text-center"><span style="display:none;">{{Ejercicio.fcini|date ('Ymd')}}</span>
+                            {{Ejercicio.fcini|date ('d/m/Y')}}</td>
+                        <td class="text-center"><span style="display:none;">{{Ejercicio.fcfin|date ('Ymd')}}</span>
+                            {{Ejercicio.fcfin|date ('d/m/Y')}}</td>
                         <td>{{Ejercicio.estadoEjercicio.descripcion}}</td>
                         <td class="text-center">
                            <a href="{{path("queryAsiento",{ "ejercicio_id":Ejercicio.id })}}" 

@@ -1,11 +1,11 @@
 <?php
 
-namespace ModelBundle\Entity;
+namespace ContabilidadBundle\Entity;
 
 /**
  * Proveedores
  */
-class Proveedores
+class Proveedor
 {
     /**
      * @var integer
@@ -23,11 +23,14 @@ class Proveedores
     private $descripcion;
 
     /**
-     * @var \ModelBundle\Entity\CuentasMayor
+     * @var \ContabilidadBundle\Entity\CuentaMayor
      */
     private $cuentaMayor;
 
 
+    public function __toString() {
+        return $this->descripcion;
+    }
     /**
      * Get id
      *
@@ -89,11 +92,11 @@ class Proveedores
     /**
      * Set cuentaMayor
      *
-     * @param \ModelBundle\Entity\CuentasMayor $cuentaMayor
+     * @param \ContabilidadBundle\Entity\CuentasMayor $cuentaMayor
      *
      * @return Proveedores
      */
-    public function setCuentaMayor(\ModelBundle\Entity\CuentasMayor $cuentaMayor = null)
+    public function setCuentaMayor(\ContabilidadBundle\Entity\CuentaMayor $cuentaMayor = null)
     {
         $this->cuentaMayor = $cuentaMayor;
 
@@ -103,7 +106,7 @@ class Proveedores
     /**
      * Get cuentaMayor
      *
-     * @return \ModelBundle\Entity\CuentasMayor
+     * @return \ContabilidadBundle\Entity\CuentaMayor
      */
     public function getCuentaMayor()
     {

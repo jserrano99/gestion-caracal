@@ -5,7 +5,7 @@ namespace ContabilidadBundle\Entity;
 /**
  * GrupoCuentas
  */
-class GrupoCuentas
+class GrupoCuenta
 {
     /**
      * @var integer
@@ -18,6 +18,9 @@ class GrupoCuentas
     private $descripcion;
 
 
+    public function __toString() {
+        return $this->descripcion;
+    }
     /**
      * Get id
      *

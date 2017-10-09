@@ -44,7 +44,7 @@ $hasMinorProblems = (bool) count($minorProblems);
                 background: #eee;
             }
             body {
-                font: 11px Verdana, Arial, sans-serif;
+                font: 11px Verdana, arial, sans-serif;
                 color: #333;
             }
             .sf-reset, .sf-reset .block, .sf-reset #message {
@@ -106,7 +106,7 @@ $hasMinorProblems = (bool) count($minorProblems);
             }
             #content pre {
                 white-space: normal;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: arial, Helvetica, sans-serif;
             }
 
             /*
@@ -167,7 +167,7 @@ $hasMinorProblems = (bool) count($minorProblems);
             }
             .sf-reset h2 {
                 font-size: 16px;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: arial, Helvetica, sans-serif;
             }
             .sf-reset li a {
                 background: none;
@@ -207,7 +207,7 @@ $hasMinorProblems = (bool) count($minorProblems);
                 background: transparent none;
                 text-transform: uppercase;
                 cursor: pointer;
-                font: bold 11px Arial, Helvetica, sans-serif;
+                font: bold 11px arial, Helvetica, sans-serif;
             }
             .sf-button span {
                 text-decoration: none;
@@ -251,7 +251,7 @@ $hasMinorProblems = (bool) count($minorProblems);
             /* styles copied from bundles/sensiodistribution/webconfigurator/css/install.css */
             body {
                 font-size: 14px;
-                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, arial, Helvetica, sans-serif;
             }
             .sf-reset h1.title {
                 font-size: 45px;
@@ -261,7 +261,7 @@ $hasMinorProblems = (bool) count($minorProblems);
                 font-weight: bold;
                 color: #FFFFFF;
                 /* Font is reset to sans-serif (like body) */
-                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, arial, Helvetica, sans-serif;
                 margin-bottom: 10px;
                 background-color: #aacd4e;
                 padding: 2px 4px;
@@ -297,7 +297,7 @@ $hasMinorProblems = (bool) count($minorProblems);
             }
             .sf-reset .ok {
                 color: #fff;
-                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+                font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, arial, Helvetica, sans-serif;
                 background-color: #6d6;
                 padding: 10px;
                 margin-bottom: 20px;

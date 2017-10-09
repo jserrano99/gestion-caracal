@@ -35,6 +35,9 @@ listadoPatrullas:
 sobrePatrullas:
     path:   /Patrulla/sobre/{ronda_id}
     defaults: { _controller: CompeticionBundle:Patrulla:Sobre} 
+patrullasDorsal:
+    path:   /Patrulla/PatrullasDorsal/{ronda_id}
+    defaults: { _controller: CompeticionBundle:Patrulla:PatrullasDorsal} 
 
     
 queryPartiRonda:
@@ -67,7 +70,7 @@ inscritosRonda:
 tablillaPuntuacion:
     path:   /Ronda/tablilla/{ronda_id}
     defaults: { _controller: CompeticionBundle:PartiRonda:Tablillas}
-  
+
     
 addRonda:
     path:   /Ronda/add
@@ -100,8 +103,7 @@ editCompeticion:
 deleteCompeticion:
     path:   /Competicion/delete/{id}
     defaults: { _controller: CompeticionBundle:Competicion:Delete}
-    options: 
-        expose: true
+    
 generaClasificatorio:
     path:   /Clasificacion/Clasificatorio/{competicion_id}
     defaults: { _controller: CompeticionBundle:Clasificacion:Clasificatorio}

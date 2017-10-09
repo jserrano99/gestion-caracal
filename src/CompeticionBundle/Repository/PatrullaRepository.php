@@ -85,6 +85,7 @@ class PatrullaRepository extends \Doctrine\orm\EntityRepository {
 				."							      where miembros_patrulla.patrulla_id = patrullas.id "
 				."								 and patrullas.ronda_id = :ronda_id) "
 				." and participantes.id = participantes_rondas.participante_id "
+                ." and participantes_rondas.ronda_id = :ronda_id "
 				." and participantes_rondas.inscrito = 'S' "
 				." and modalidades.id = participantes.modalidad_id"
 				." and arqueros.id = participantes.arquero_id "

@@ -7,9 +7,9 @@
    <a href="{{path("addPatrulla",{"ronda_id":Ronda.id})}}" class="btn btn-warning">Nueva Patrulla</a>
    <a href="{{path("generarPatrullas",{"ronda_id":Ronda.id})}}" class="btn btn-info">Generar Patrullas</a>
    <a href="{{path("eliminarPatrullas",{"ronda_id":Ronda.id})}}" class="btn btn-danger">Eliminar Patrullas</a>
-   <a href="{{path("listadoPatrullas",{"ronda_id":Ronda.id})}}" class="btn btn-info">Listado Patrullas</a>
-   <a href="{{path("sobrePatrullas",{"ronda_id":Ronda.id})}}" class="btn btn-info">Sobres Patrullas</a>
-   
+   <a href="{{path("listadoPatrullas",{"ronda_id":Ronda.id})}}" target="_blank" class="btn btn-info">Listado Patrullas</a>
+   <a href="{{path("sobrePatrullas",{"ronda_id":Ronda.id})}}" target="_blank"  class="btn btn-info">Sobres Patrullas</a>
+    <a href="{{path("patrullasDorsal",{"ronda_id":Ronda.id})}}" target="_blank"  class="btn btn-info">Patrullas Dorsal</a>
    <br/>
 {% endblock %} 
 {% block contenido %}

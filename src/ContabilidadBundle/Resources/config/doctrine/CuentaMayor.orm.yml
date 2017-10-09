@@ -1,6 +1,7 @@
 ContabilidadBundle\Entity\CuentaMayor:
     type: entity
     table: cuentas_mayor
+    repositoryClass: ContabilidadBundle\Repository\CuentaMayorRepository
     indexes:
         idx_grupo_cuentas:
             columns:
@@ -31,8 +32,8 @@ ContabilidadBundle\Entity\CuentaMayor:
             options:
                 fixed: false
     manyToOne:
-        grupoCuentas:
-            targetEntity: GrupoCuentas
+        grupoCuenta:
+            targetEntity: GrupoCuenta
             cascade: {  }
             fetch: LAZY
             mappedBy: null

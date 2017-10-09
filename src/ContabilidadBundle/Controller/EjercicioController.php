@@ -4,12 +4,14 @@ namespace ContabilidadBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Response;
 
 use ContabilidadBundle\Entity\Ejercicio;
 use ContabilidadBundle\Form\EjercicioType;
 use ContabilidadBundle\Form\EditEjercicioType;
 use Symfony\Component\HttpFoundation\Request;
-
+use ContabilidadBundle\Reports\LibroMayor;
+use ContabilidadBundle\Reports\LibroDiario;
 
 class EjercicioController extends Controller
 {
@@ -64,7 +66,7 @@ class EjercicioController extends Controller
             
             $status = "EJERCICIO CREADO CORRECTAMENTE";
             $this->sesion->getFlashBag()->add("status",$status);
-                return $this->redirectToRoute("queryEjercicio");
+            return $this->redirectToRoute("queryEjercicio");
                 
            }
                 
@@ -104,7 +106,43 @@ class EjercicioController extends Controller
         ));        
     }
     
+    public function LibroMayorAction($ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $Apunte_repo = $EntityManager->getRepository("ContabilidadBundle:Apunte");
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        if ($ejercicio_id == null ) {
+            $ejercicio_id = $EjercicioActual->getEjercicio()->getId();
+        } 
+        
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $Apuntes = $Apunte_repo->queryLibroMayor($ejercicio_id);
+        $rootDir= $this->get('kernel')->getRootDir();
+	    $pdf = new LibroMayor('P','mm','A4',$Ejercicio, $Apuntes, $rootDir);
 
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+	}
+  
+    public function LibroDiarioAction($ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $Apunte_repo = $EntityManager->getRepository("ContabilidadBundle:Apunte");
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        if ($ejercicio_id == null ) {
+            $ejercicio_id = $EjercicioActual->getEjercicio()->getId();
+        } 
+        
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $Apuntes = $Apunte_repo->queryLibroDiario($ejercicio_id);
+        $rootDir= $this->get('kernel')->getRootDir();
+	    $pdf = new LibroDiario('L','mm','A4',$Ejercicio, $Apuntes, $rootDir);
+
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+	}
     
 }
   

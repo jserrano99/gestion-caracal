@@ -1,9 +1,8 @@
 {% extends "GestionBundle::layout.html.twig" %} 
 {% block menu %}
     <ul class="nav navbar-nav">
+        <li><a href="{{path("contabilidad_homepage")}}">Contabilidad</a></li>
         <li><a href="{{path("queryEjercicio")}}">Ejercicios</a></li>
-        <li><a href="{{path("queryProyecto")}}">Proyectos</a></li>
-        <li><a href="{{path("queryAsiento")}}">Asientos</a></li>
         <li><a href="{{path("queryCuentaMayor")}}">Cuentas de Mayor</a></li>
         <li class="dropdown">
             <a href="#" 
@@ -11,12 +10,12 @@
                data-toggle="dropdown" 
                role="button" 
                aria-haspopup="true" 
-               aria-expanded="false">Informes Gestión<span class="caret"></span></a>
+               aria-expanded="false">Nuevo Asiento<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="{{path("libroDiario")}}">Libro Diario</a></li>
-                <li><a href="{{path("libroMayor")}}">Libro Mayor</a></li>
-                <li><a href="{{path("repBalance")}}">Balance</a></li>
-                <li><a href="{{path("repCuentaResultados")}}">Cuenta Resultados</a></li>
+                <li><a href="{{path("addAsientoFactura")}}">Compra con Factura</a></li>
+                <li><a href="{{path("addAsientoTraspaso")}}">Traspaso de Eefectivo a Caja</a></li>
+                <li><a href="{{path("addAsientoGasto")}}">Asiento de Gastos</a></li>
+                <li><a href="{{path("addAsientoIngreso")}}">Asiento de Ingresos</a></li>
             </ul>
         </li>
     </ul>    

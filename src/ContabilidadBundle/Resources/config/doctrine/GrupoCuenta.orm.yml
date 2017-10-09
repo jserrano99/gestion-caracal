@@ -1,4 +1,4 @@
-ContabilidadBundle\Entity\GrupoCuentas:
+ContabilidadBundle\Entity\GrupoCuenta:
     type: entity
     table: grupo_cuentas
     id:

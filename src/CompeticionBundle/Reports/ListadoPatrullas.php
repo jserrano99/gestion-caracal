@@ -24,6 +24,7 @@ class ListadoPatrullas extends \FPDF {
 
         return $this->rootDir;
 	}
+    
 	public function setRonda (\CompeticionBundle\Entity\Ronda $ronda=null) {
 		$this->ronda = $ronda;
 
@@ -46,13 +47,13 @@ class ListadoPatrullas extends \FPDF {
 		$this->SetMargins(3,3);
 		
 		$this->image($this->getRootDir().'/src/img/LogoCaracal.png',2,2,25,30);
-		$this->SetFont('Arial','B',20);
-		$this->Cell(290,5,$this->getRonda()->getCompeticion()->getDescripcion(),0,0,'C');
+		$this->SetFont('arial','B',20);
+		$this->Cell(290,5, utf8_decode($this->getRonda()->getCompeticion()->getDescripcion()),0,0,'C');
 		$this->Ln();
-		$this->SetFont('Arial','B',15);
-		$this->Cell(290,5,$this->getRonda()->getDescripcion(),0,0,'C');
+		$this->SetFont('arial','B',15);
+		$this->Cell(290,5,utf8_decode($this->getRonda()->getDescripcion()),0,0,'C');
 		$this->Ln();
-		$this->SetFont('Arial','B',10);
+		$this->SetFont('arial','B',10);
 		$this->Cell(290,5,'LISTADO DE PATRULLAS',0,0,'C');
 		$this->Ln();
 		$this->Cell(290,15,'',0,0,'C'); // relleno de la cabecera
@@ -65,7 +66,7 @@ class ListadoPatrullas extends \FPDF {
    
     public function Footer() {
 		$this->SetY(-15);
-		$this->SetFont('Arial','I',8);
+		$this->SetFont('arial','I',8);
 		$this->Cell(0,10,utf8_decode('Página:').$this->PageNo().'/{nb}',0,0,'C');
 		$this->Ln();
     }
@@ -75,7 +76,7 @@ class ListadoPatrullas extends \FPDF {
 		
         if ($patrullaAnt !="") {
             $this->SetFillColor(230);
-            $this->SetFont('Arial','B',8);
+            $this->SetFont('arial','B',8);
             $this->Cell(100, 5, utf8_decode('Patrulla Nº: ').$patrullaAnt, 1,0,'L',1);
             $this->Ln();
             $this->Cell(100, 1,'',0,0,'L',0);
@@ -84,14 +85,14 @@ class ListadoPatrullas extends \FPDF {
             $borde = 1;
             $this->SetFillColor(230);
             $relleno = true;
-            $this->SetFont('Arial','B',8);
+            $this->SetFont('arial','B',8);
             $this->Cell(15,$ancho,utf8_decode('DORSAL'),$borde,0,'C',$relleno);
             $this->Cell(90,$ancho,'NOMBRE Y APELLIDOS',$borde,0,'C',$relleno);
             $this->Cell(18,$ancho,utf8_decode('Nº LICENCIA'),$borde,0,'C',$relleno);
             $this->Cell(85,$ancho,'CLUB',$borde,0,'C',$relleno);
             $this->Cell(40,$ancho,utf8_decode('CATEGORÍA'),$borde,0,'C',$relleno);
             $this->Cell(40,$ancho,'MODALIDAD',$borde,0,'C',$relleno);
-            $this->SetFont('Arial','',8);
+            $this->SetFont('arial','',8);
             $this->Ln();
         }
     }
@@ -103,7 +104,7 @@ class ListadoPatrullas extends \FPDF {
 		$this->AliasNbPages(); // ESTO NOS DEFINE EL NÚMERO TOTAL DE PÁGINAS DEL LISTADO
 		$this->SetMargins(3,3);
 	
-		$this->SetFont('Arial','',8);
+		$this->SetFont('arial','',8);
 		$patrullaAnt="";
 		$this->AddPage();
 		foreach ($miembrosPatrullas as $miembro) {

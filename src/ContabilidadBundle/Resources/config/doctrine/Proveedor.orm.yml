@@ -1,6 +1,7 @@
-ModelBundle\Entity\Proveedores:
+ContabilidadBundle\Entity\Proveedor:
     type: entity
     table: proveedores
+    repositoryClass: ContabilidadBundle\Repository\ProveedorRepository
     indexes:
         idCuentaMayor:
             columns:
@@ -30,7 +31,7 @@ ModelBundle\Entity\Proveedores:
                 fixed: false
     manyToOne:
         cuentaMayor:
-            targetEntity: CuentasMayor
+            targetEntity: CuentaMayor
             cascade: {  }
             fetch: LAZY
             mappedBy: null

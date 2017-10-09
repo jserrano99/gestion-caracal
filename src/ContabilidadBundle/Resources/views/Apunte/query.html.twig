@@ -1,7 +1,10 @@
 {% extends "ContabilidadBundle::menu.html.twig" %} 
 {% block titulo %} CONSULTA DE APUNTES : Ejercicio {{Asiento.ejercicio.descripcion}} 
-<br/>
-Asiento: {{Asiento.numero}} Fecha: {{Asiento.fecha|date('d/m/Y')}}--{{Asiento.descripcion }}
+    <br/>
+    Asiento: {{Asiento.numero}} Fecha: {{Asiento.fecha|date('d/m/Y')}}--{{Asiento.descripcion }}
+    <br/>
+    <a href="{{path("queryAsiento",{"asiento_id":Asiento.id})}}" class="btn btn-success">Volver</a>
+    <hr/>
 {% endblock %}
 {% block contenido %}
     <div class="container-fluid">
@@ -33,7 +36,7 @@ Asiento: {{Asiento.numero}} Fecha: {{Asiento.fecha|date('d/m/Y')}}--{{Asiento.de
                         <td>{{Apunte.cuentaHaber}}</td>
                         
                         <td class="text-center">
-                           <a href="#" 
+                           <a href="{{path("editApunte",{"id":Apunte.id})}}" 
                               class="btn btn-success">Editar</a>
                         </td>
                     </tr>

@@ -38,4 +38,17 @@ class AsientoRepository extends \Doctrine\ORM\EntityRepository
 		return $po;
 		
     }
+    
+    public function siguienteAsiento() {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        $query = " select max(numero)+1 as numero from asientos";
+        $stmt = $db->prepare($query);
+		$params = Array();
+		$stmt->execute($params);
+		$po = $stmt->fetch();
+		
+        return $po{"numero"};
+		
+    }
 }

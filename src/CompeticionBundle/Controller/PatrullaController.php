@@ -25,6 +25,7 @@ use CompeticionBundle\Entity\Patrulla;
 use CompeticionBundle\Form\PatrullaType;
 use CompeticionBundle\Reports\ListadoPatrullas;
 use CompeticionBundle\Reports\SobrePatrulla;
+use CompeticionBundle\Reports\PatrullasDorsal;
 
 class PatrullaController extends Controller
 {
@@ -167,7 +168,7 @@ class PatrullaController extends Controller
             'Content-Type' => 'application/pdf'));
 	}
 	
-	    public function SobreAction($ronda_id) {
+	public function SobreAction($ronda_id) {
 		$EntityManager = $this->getDoctrine()->getManager();
         $Ronda_repo = $EntityManager->getRepository("CompeticionBundle:Ronda");
 		$Patrulla_repo = $EntityManager->getRepository("CompeticionBundle:Patrulla");
@@ -176,6 +177,22 @@ class PatrullaController extends Controller
 		$MiembrosPatrullas = $Patrulla_repo->queryMiembrosPatrullaRonda($ronda_id);
 		
 		$pdf = new SobrePatrulla('L','mm',array(184,261),$Ronda, $MiembrosPatrullas, $rootDir);
+
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+	}
+	
+    public function PatrullasDorsalAction($ronda_id) {
+		$EntityManager = $this->getDoctrine()->getManager();
+        $Ronda_repo = $EntityManager->getRepository("CompeticionBundle:Ronda");
+		$Patrulla_repo = $EntityManager->getRepository("CompeticionBundle:Patrulla");
+	    $Ronda = $Ronda_repo->find($ronda_id);
+
+		$rootDir = $this->get('kernel')->getRootDir();
+	
+		$MiembrosPatrullas = $Patrulla_repo->queryMiembrosPatrullaDorsal($ronda_id);
+		
+		$pdf = new PatrullasDorsal('L','mm','A4',$Ronda, $MiembrosPatrullas, $rootDir);
 
         return new Response($pdf->Output(), 200, array(
             'Content-Type' => 'application/pdf'));

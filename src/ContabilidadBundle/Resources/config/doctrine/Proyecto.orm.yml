@@ -1,6 +1,7 @@
 ContabilidadBundle\Entity\Proyecto:
     type: entity
     table: proyectos
+    repositoryClass: ContabilidadBundle\Repository\ProyectoRepository
     id:
         id:
             type: integer
