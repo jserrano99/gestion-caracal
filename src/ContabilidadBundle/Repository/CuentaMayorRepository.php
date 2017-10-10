@@ -9,5 +9,55 @@ namespace ContabilidadBundle\Repository;
  */
 class CuentaMayorRepository extends \Doctrine\ORM\EntityRepository
 {
-    
+     public function queryApuntes($cuentaMayor_id,$ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = " select apuntes.id "
+                ."    ,apuntes.numero "
+                ."    ,apuntes.cuenta_debe_id as cuentaMayor_id "
+                ."    ,concat(cuentas_mayor.codigo,'--',cuentas_mayor.descripcion) as cuentaMayor "
+                ."    ,grupo_cuentas.descripcion as grupoCuenta "
+                ."    ,apuntes.importe_debe as importeDebe "
+                ."    ,null  as importeHaber  "
+                ."    ,apuntes.descripcion  as apunteDescripcion "
+                ."    ,apuntes.observaciones  as apunteObservaciones  "
+                ."    ,apuntes.asiento_id as asiento_id "
+                ."    ,asientos.numero as asientoNumero  "
+                ."    ,date_format(asientos.fecha ,'%d/%m/%Y') as asientoFecha "
+                ." from asientos "
+                ."   inner join apuntes on asientos.id = apuntes.asiento_id "
+                ."   inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_debe_id "
+                ."   inner join grupo_cuentas on grupo_cuentas.id = cuentas_mayor.grupo_cuentas_id "
+                ." where asientos.ejercicio_id = :ejercicio_id  "
+                ."   and apuntes.cuenta_debe_id = :cuentaMayor_id "
+                ."   union "
+                ." select apuntes.id "
+                ."    ,apuntes.numero "
+                ."    ,apuntes.cuenta_haber_id as cuentaMayor_id "
+                ."    ,concat(cuentas_mayor.codigo,'--',cuentas_mayor.descripcion) as cuentaMayor "
+                ."    ,grupo_cuentas.descripcion as grupoCuentas "
+                ."    ,null  as importeDebe "
+                ."    ,apuntes.importe_haber  as importeHaber  "
+                ."    ,apuntes.descripcion  as apunteDescripcion "
+                ."    ,apuntes.observaciones  as apunteObservaciones  "
+                ."    ,apuntes.asiento_id as asiento_id "
+                ."    ,asientos.numero as asientoNumero  "
+                ."    ,date_format(asientos.fecha ,'%d/%m/%Y') as asientoFecha "
+                ." from asientos "
+                ."   inner join apuntes on asientos.id = apuntes.asiento_id "
+                ."   inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_haber_id "
+                ."   inner join grupo_cuentas on grupo_cuentas.id = cuentas_mayor.grupo_cuentas_id "
+                ." where asientos.ejercicio_id = :ejercicio_id "
+                ."   and apuntes.cuenta_haber_id = :cuentaMayor_id "
+                ." ORDER by asientoNumero";
+        
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id, ":cuentaMayor_id" => $cuentaMayor_id);
+        $stmt->execute($params);
+		$po = $stmt->fetchAll();
+		
+		return $po;
+    }
+   
 }

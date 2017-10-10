@@ -51,4 +51,34 @@ class AsientoRepository extends \Doctrine\ORM\EntityRepository
         return $po{"numero"};
 		
     }
+    
+    public function queryOrderByFecha($ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+		
+        $query = " select asientos.id as id "
+                ." ,asientos.numero as numero"
+                ." ,asientos.fecha as fecha"
+                ." ,asientos.descripcion as descripcion"
+                ." ,asientos.proyecto_id as proyecto_id "
+                ." ,proyectos.descripcion as proyecto"
+                ." ,asientos.importe_debe as importeDebe"
+                ." ,asientos.importe_haber as importeHaber"
+                ." ,ejercicios.id as ejercicio_id"
+                ." ,ejercicios.descripcion as ejercicio"
+                ." from asientos "
+                ." inner join ejercicios on asientos.ejercicio_id = ejercicios.id "
+                ." left join proyectos on asientos.proyecto_id = proyectos.id"
+                ." where asientos.ejercicio_id = :ejercicio_id "
+                ." order by asientos.fecha "
+                ;
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+		$stmt->execute($params);
+		$po = $stmt->fetchAll();
+		
+		return $po;
+		
+    }
+    
 }

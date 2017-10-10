@@ -138,11 +138,30 @@ class EjercicioController extends Controller
         $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
         $Apuntes = $Apunte_repo->queryLibroDiario($ejercicio_id);
         $rootDir= $this->get('kernel')->getRootDir();
-	    $pdf = new LibroDiario('L','mm','A4',$Ejercicio, $Apuntes, $rootDir);
+        $pdf = new LibroDiario('L','mm','A4',$Ejercicio, $Apuntes, $rootDir);
 
         return new Response($pdf->Output(), 200, array(
             'Content-Type' => 'application/pdf'));
 	}
     
+    public function RenumeraAsientosAction($ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $Asiento_repo = $EntityManager->getRepository("ContabilidadBundle:Asiento");
+        
+        $Asientos = $Asiento_repo->queryOrderByFecha($ejercicio_id);
+        $nm = 1;
+        foreach ( $Asientos as $row) {
+            $Asiento = $Asiento_repo->find($row["id"]);
+            $Asiento->setNumero($nm);
+            $EntityManager->persist($Asiento);
+            $EntityManager->flush();
+            $nm++;
+        }
+        
+        $status = "ASIENTOS RENUMERADOS CORRECTAMENTE";
+        $this->sesion->getFlashBag()->add("status",$status);
+        return $this->redirectToRoute("queryEjercicio");
+    }
 }
   

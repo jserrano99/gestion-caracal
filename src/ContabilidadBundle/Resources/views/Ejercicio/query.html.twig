@@ -39,6 +39,9 @@
                               class="btn btn-warning">Editar</a>
                            <input type="button" id="boton-cierre" 
                                   class="btn btn-danger" value="Cerrar" onClick="CerrarEjercicio({{Ejercicio.id}})">
+                           <input type="button" id="boton-cierre" 
+                                  class="btn btn-warning" value="Renumerar" onClick="RenumeraAsientos({{Ejercicio.id}})">
+                           
                            <a href="{{path("estableceEjercicio",{ "ejercicio_id":Ejercicio.id })}}" 
                               class="btn btn-info">Actual</a>
                            

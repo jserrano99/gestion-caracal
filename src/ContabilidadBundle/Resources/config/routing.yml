@@ -12,6 +12,9 @@ repCuentaResultados:
     defaults: {_controller: ContabilidadBundle:Ejercicio:CuentaResultados, ejercicio_id: null}
     
      
+apuntesCuentaMayor:
+    path: /Contabilidad/CuentaMayor/Apuntes/{id}/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:CuentaMayor:Apuntes, ejercicio_id: null}
 addCuentaMayor:
     path: /Contabilidad/CuentaMayor/Add
     defaults: {_controller: ContabilidadBundle:CuentaMayor:Add}
@@ -85,7 +88,12 @@ deleteAsiento:
 queryAsiento:
     path: /Contabilidad/Asiento/Query/{ejercicio_id}
     defaults: {_controller: ContabilidadBundle:Asiento:Query, ejercicio_id: null }
-
+    
+renumeraAsiento:
+    path: /Contabilidad/Ejercicio/Renumera/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:RenumeraAsientos}
+    options:
+        expose: true
 
 estableceEjercicio:
     path: /Contabilidad/Ejercicio/Actual/{ejercicio_id}

@@ -10,6 +10,39 @@ class LibroDiario extends \FPDF {
 	
     private $cuentaMayor;
     
+    private $asientoNumero;
+    
+    private $asientoFecha;
+    
+    private $asientoDescripcion;
+    
+    public function setAsientoDescripcion($asientoDescripcion) {
+        $this->asientoDescripcion = $asientoDescripcion;
+        return $this;
+    }
+    
+    public function getAsientoDescripcion() { 
+        return $this->asientoDescripcion;
+    }
+    
+    public function setAsientoFecha($asientoFecha) {
+        $this->asientoFecha =$asientoFecha;
+        return $this;
+    }
+    
+    public function getAsientoFecha() { 
+        return $this->asientoFecha;
+    }
+    
+    public function setAsientoNumero($asientoNumero) {
+        $this->asientoNumero =$asientoNumero;
+        return $this;
+    }
+    
+    public function getAsientoNumero() { 
+        return $this->asientoNumero;
+    }
+    
     public function setCuentaMayor($cuentaMayor) {
         $this->cuentaMayor =$cuentaMayor;
         return $this;
@@ -18,6 +51,7 @@ class LibroDiario extends \FPDF {
     public function getCuentaMayor() { 
         return $this->cuentaMayor;
     }
+    
     /**
      * @var \ContabilidadBundle\Entity\Ejercicio
      */
@@ -50,7 +84,6 @@ class LibroDiario extends \FPDF {
     }
     
     function Header() {
-        $this->SetMargins(1,1);
         $this->SetFont('arial','B',8);
         $this->Cell(280,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
         $this->Ln(1);
@@ -62,6 +95,7 @@ class LibroDiario extends \FPDF {
         $this->SetFont('arial','B',12);
         $this->Cell(290,10,'EJERCICIO: '.$this->getEjercicio()->getDescripcion(),0,0,'C');
         $this->Ln(25);
+        $this->cabeceraAsiento();
     }
 
     function Footer() {
@@ -71,78 +105,58 @@ class LibroDiario extends \FPDF {
         $this->Ln();
     }
     
-    function cabeceraAsiento($Apunte) {
-        $this->SetFillColor(230);
-        $this->SetFont('arial','B',9);
-        $this->Cell(25,8, utf8_decode(' Nº Asiento: ').$Apunte['asientoNumero'],0,0,'C',1);
-        $this->Cell(45,8,' Fecha Asiento: '.$Apunte['asientoFecha'],0,0,'C',1);
-        $this->Cell(220,8,' Concepto: '.utf8_decode($Apunte['asientoDescripcion']),0,0,'L',1);
-        $this->Ln();
-        $this->SetFont('arial','BIU',8);
-        $this->Cell(20,5,utf8_decode('Nº Apunte'),0,0,'C',1);
-        $this->Cell(100,5,utf8_decode('Concepto'),0,0,'C',1);
-        $this->Cell(120,5,utf8_decode('Cuenta de Mayor'),0,0,'C',1);
-        $this->Cell(25,5,utf8_decode('Importe Debe'),0,0,'C',1);
-        $this->Cell(25,5,utf8_decode('Importe Haber'),0,0,'C',1);
-        $this->Ln();
-        $this->SetFont('arial','',8);
+    function cabeceraAsiento() {
+        if ($this->asientoNumero) {
+            $this->SetFillColor(230);
+            $this->SetFont('arial','',9);
+            $this->Cell(25,8, utf8_decode(' Nº Asiento: ').$this->asientoNumero,0,0,'C',1);
+            $this->Cell(45,8,' Fecha Asiento: '.$this->asientoFecha,0,0,'C',1);
+            $this->Cell(210,8,' Concepto: '.utf8_decode($this->asientoDescripcion),0,0,'L',1);
+            $this->Ln();
+            $this->SetFont('arial','BIU',8);
+            $this->Cell(20,5,utf8_decode('Nº Apunte'),0,0,'C',1);
+            $this->Cell(100,5,utf8_decode('Concepto'),0,0,'C',1);
+            $this->Cell(110,5,utf8_decode('Cuenta de Mayor'),0,0,'C',1);
+            $this->Cell(25,5,utf8_decode('Importe Debe'),0,0,'C',1);
+            $this->Cell(25,5,utf8_decode('Importe Haber'),0,0,'C',1);
+            $this->Ln();
+        }
     }
     
     public function genera($Apuntes) { 
-        
         $this->AddPage();
         $this->AliasNbPages(); 
-        $relleno=true;
-        $borde=false;
         define('EURO', chr(128));
         $antAsiento = 0;
-        $ctLineas = 0;
-        $numLineas = 18;
         foreach ($Apuntes as $Apunte){
-            
             if ($Apunte["asientoId"] != $antAsiento) {
-                $this->cabeceraAsiento($Apunte);
                 $antAsiento = $Apunte["asientoId"];
-                $ctLineas+2;
+                $this->asientoNumero = $Apunte['asientoNumero'];
+                $this->asientoFecha =  $Apunte['asientoFecha'];
+                $this->asientoDescripcion = $Apunte['asientoDescripcion'];
+                $this->cabeceraAsiento();
             }       
         
-            $borde=false;
-            if ($ctLineas > $numLineas ) {
-                $this->AddPage ();
-                $this->cabeceraAsiento($Apunte);
-                $ctLineas=0;
-            }
-            
+            $borde=false; 
+            $relleno=false;
+            $this->SetFont('arial','',8);
             $this->Cell(20,5,$Apunte['apunteNumero'],0,0,'C',0);
             $this->Cell(100,5,utf8_decode($Apunte['apunteDescripcion']),0,0,'L',0);
             $this->Ln(3);
             if ( $Apunte['importeDebe'] > 0 ) {
-                if ($ctLineas > $numLineas ) {
-                    $this->AddPage ();
-                    $this->cabeceraAsiento($Apunte);
-                    $ctLineas=0;
-                }
                 $this->Cell(80,5,'',0,0,'C',0);
-                $this->Cell(160,5,utf8_decode($Apunte['cuentaDebe']),0,0,'L',0);
+                $this->Cell(150,5,utf8_decode($Apunte['cuentaDebe']),0,0,'L',0);
                 $this->Cell(25,5,number_format($Apunte['importeDebe'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
                 $this->ln();
-                $ctLineas++;
             }
             if ( $Apunte['importeHaber'] > 0 ) {
-                if ($ctLineas > $numLineas ) {
-                    $this->AddPage ();
-                    $this->cabeceraAsiento($Apunte);
-                    $ctLineas=0;
-                }
                 $this->Cell(80,5,'',0,0,'C',0);
-                $this->Cell(160,5, utf8_decode($Apunte['cuentaHaber']),0,0,'L',0);
+                $this->Cell(150,5, utf8_decode($Apunte['cuentaHaber']),0,0,'L',0);
                 $this->Cell(25,5,'',0,0,'C',0);
                 $this->Cell(25,5,number_format($Apunte['importeHaber'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
                 $this->Ln();
-                $ctLineas++;
             }
-            $ctLineas++;
-        }
+        }    
    }
    
 }

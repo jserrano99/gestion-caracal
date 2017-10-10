@@ -4,11 +4,12 @@ namespace ContabilidadBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Response;
 
 use ContabilidadBundle\Entity\CuentaMayor;
 use ContabilidadBundle\Form\CuentaMayorType;
 use Symfony\Component\HttpFoundation\Request;
-
+use ContabilidadBundle\Reports\ApuntesCuenta;
 
 class CuentaMayorController extends Controller
 {
@@ -97,7 +98,25 @@ class CuentaMayorController extends Controller
         ));        
     }
     
+    public function ApuntesAction($id, $ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $CuentaMayor_repo = $EntityManager->getRepository("ContabilidadBundle:CuentaMayor");
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        if ($ejercicio_id == null ) {
+            $ejercicio_id = $EjercicioActual->getEjercicio()->getId();
+        } 
+        
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $CuentaMayor = $CuentaMayor_repo->find($id);
+        
+        $Apuntes = $CuentaMayor_repo->queryApuntes($id,$ejercicio_id);
+        $rootDir= $this->get('kernel')->getRootDir();
+	    $pdf = new ApuntesCuenta('P','mm','A4',$Ejercicio, $CuentaMayor, $Apuntes, $rootDir);
 
-    
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+    }
 }
   

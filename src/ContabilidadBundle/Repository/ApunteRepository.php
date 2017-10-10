@@ -109,7 +109,7 @@ class ApunteRepository extends \Doctrine\ORM\EntityRepository
                 ."    left join cuentas_mayor as cuentas_mayor_debe on apuntes.cuenta_debe_id = cuentas_mayor_debe.id "
                 ."    left join cuentas_mayor as cuentas_mayor_haber on apuntes.cuenta_haber_id = cuentas_mayor_haber.id "
                 ."    where asientos.ejercicio_id = :ejercicio_id "
-                ." order by asientos.numero "
+                ." order by asientoNumero, apunteNumero "
                 ;
         
         $stmt = $db->prepare($query);
