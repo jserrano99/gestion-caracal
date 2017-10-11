@@ -119,4 +119,81 @@ class ApunteRepository extends \Doctrine\ORM\EntityRepository
 		
 		return $po;
     }
+    
+    public function queryBalance($ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = " select 	estr_balance.id as balance_id,"
+                 ."         estr_balance.nivel0,"
+                 ."         niveles_balance_0.nivel_balance as nivel_0 ,"
+                 ."         estr_balance.nivel1,"
+                 ."         niveles_balance_1.nivel_balance as nivel_1 ,"
+                 ."         estr_balance.nivel2,"
+                 ."         niveles_balance_2.nivel_balance as nivel_2 ,"
+                 ."         estr_balance.nivel3,"
+                 ."         niveles_balance_3.nivel_balance as nivel_3 ,"
+                 ."         estr_balance.nivel4,"
+                 ."         niveles_balance_4.nivel_balance as nivel_4 ,"
+                 ."         estr_balance.cuenta_mayor_id,"
+                 ."         cuenta_mayor_debe.descripcion as cuenta_mayor ,"
+                 ."         apuntes.id as apunte_id ,"
+                 ."         apuntes.numero as apuntes_numero ,"
+                 ."         apuntes.asiento_id as asiento_id ,"
+                 ."         asientos.numero as asiento_numero ,"
+                 ."         asientos.fecha as asiento_fecha ,"
+                 ."         apuntes.cuenta_debe_id  as cuenta_mayor_id,"
+                 ."         apuntes.importe_debe * estr_balance.multiplicador as importe_debe ,"
+                 ."         null as importe_haber "
+                 ." from apuntes "
+                 ." INNER JOIN estr_balance on estr_balance.cuenta_mayor_id = apuntes.cuenta_debe_id "
+                 ." INNER JOIN cuentas_mayor as cuenta_mayor_debe on cuenta_mayor_debe.id = apuntes.cuenta_debe_id "
+                 ." INNER JOIN niveles_balance as niveles_balance_0 on niveles_balance_0.id = estr_balance.nivel0 "
+                 ." INNER JOIN niveles_balance as niveles_balance_1 on niveles_balance_1.id = estr_balance.nivel1 "
+                 ." INNER JOIN niveles_balance as niveles_balance_2 on niveles_balance_2.id = estr_balance.nivel2 "
+                 ." INNER JOIN niveles_balance as niveles_balance_3 on niveles_balance_3.id = estr_balance.nivel3 "
+                 ." INNER JOIN niveles_balance as niveles_balance_4 on niveles_balance_4.id = estr_balance.nivel4"
+                 ." INNER JOIN asientos on asientos.id = apuntes.asiento_id"
+                 ." where asientos.ejercicio_id = :ejercicio_id "
+                 ." union " 
+                 ." select 	estr_balance.id as balance_id, "
+                 ."         estr_balance.nivel0,"
+                 ."         niveles_balance_0.nivel_balance as nivel_0 ,"
+                 ."         estr_balance.nivel1,"
+                 ."         niveles_balance_1.nivel_balance as nivel_1 ,"
+                 ."         estr_balance.nivel2,"
+                 ."         niveles_balance_2.nivel_balance as nivel_2 ,"
+                 ."         estr_balance.nivel3,"
+                 ."         niveles_balance_3.nivel_balance as nivel_3 ,"
+                 ."         estr_balance.nivel4,"
+                 ."         niveles_balance_4.nivel_balance as nivel_4 ,"
+                 ."         estr_balance.cuenta_mayor_id,"
+                 ."         cuenta_mayor_haber.descripcion as cuenta_mayor ,"
+                 ."         apuntes.id as apunte_id ,"
+                 ."         apuntes.numero as apuntes_numero ,"
+                 ."         apuntes.asiento_id as asiento_id ,"
+                 ."         asientos.numero as asiento_numero ,"
+                 ."         asientos.fecha as asiento_fecha ,"
+                 ."         apuntes.cuenta_haber_id as cuenta_mayor_id,"
+                 ."         null as importe_debe ,"
+                 ."         apuntes.importe_haber * estr_balance.multiplicador as importe_haber "
+                 ." from apuntes "
+                 ." INNER JOIN estr_balance on estr_balance.cuenta_mayor_id = apuntes.cuenta_debe_id "
+                 ." INNER JOIN cuentas_mayor as cuenta_mayor_haber on cuenta_mayor_haber.id = apuntes.cuenta_haber_id "
+                 ." INNER JOIN niveles_balance as niveles_balance_0 on niveles_balance_0.id = estr_balance.nivel0 "
+                 ." INNER JOIN niveles_balance as niveles_balance_1 on niveles_balance_1.id = estr_balance.nivel1 "
+                 ." INNER JOIN niveles_balance as niveles_balance_2 on niveles_balance_2.id = estr_balance.nivel2 "
+                 ." INNER JOIN niveles_balance as niveles_balance_3 on niveles_balance_3.id = estr_balance.nivel3 "
+                 ." INNER JOIN niveles_balance as niveles_balance_4 on niveles_balance_4.id = estr_balance.nivel4 "
+                 ." INNER JOIN asientos on asientos.id = apuntes.asiento_id "
+                 ." where asientos.ejercicio_id = :ejercicio_id "
+                 ." ORDER BY nivel_0,nivel_1,nivel_2,nivel_3,nivel_4, cuenta_mayor";
+        
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+		$po = $stmt->fetchAll();
+		
+		return $po;
+    }
 }

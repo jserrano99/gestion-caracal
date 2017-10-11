@@ -12,6 +12,7 @@ use ContabilidadBundle\Form\EditEjercicioType;
 use Symfony\Component\HttpFoundation\Request;
 use ContabilidadBundle\Reports\LibroMayor;
 use ContabilidadBundle\Reports\LibroDiario;
+use ContabilidadBundle\Reports\Balance;
 
 class EjercicioController extends Controller
 {
@@ -162,6 +163,25 @@ class EjercicioController extends Controller
         $status = "ASIENTOS RENUMERADOS CORRECTAMENTE";
         $this->sesion->getFlashBag()->add("status",$status);
         return $this->redirectToRoute("queryEjercicio");
+    }
+    
+    public function BalanceAction($ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $Apunte_repo = $EntityManager->getRepository("ContabilidadBundle:Apunte");
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        if ($ejercicio_id == null ) {
+            $ejercicio_id = $EjercicioActual->getEjercicio()->getId();
+        } 
+        
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $Apuntes = $Apunte_repo->queryBalance($ejercicio_id);
+        $rootDir= $this->get('kernel')->getRootDir();
+        $pdf = new Balance('P','mm','A4',$Ejercicio, $Apuntes, $rootDir);
+
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
     }
 }
   
