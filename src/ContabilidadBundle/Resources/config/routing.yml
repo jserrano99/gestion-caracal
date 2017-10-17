@@ -30,6 +30,9 @@ queryCuentaMayor:
     path: /Contabilidad/CuentaMayor/Query
     defaults: {_controller: ContabilidadBundle:CuentaMayor:Query}
 
+resumenProyecto:
+    path: /Contabilidad/Proyecto/Resumen/{id}
+    defaults: {_controller: ContabilidadBundle:Proyecto:resumen}
 queryProyecto:
     path: /Contabilidad/Proyecto/Query
     defaults: {_controller: ContabilidadBundle:Proyecto:Query}

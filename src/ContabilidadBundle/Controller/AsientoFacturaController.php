@@ -54,12 +54,11 @@ class AsientoFacturaController extends Controller
                 $Proyecto = $Proyecto_repo->find($proyecto_id);
                 $Asiento->setProyecto($Proyecto);
             }
+            $Asiento->setImporteDebe($AsientoFacturaForm->get('importeFactura')->getData());
+            $Asiento->setImporteHaber(null);
+            
             $em->persist($Asiento);
             $em->flush();
-            
-            $importeDebe = 0;
-            $importeHaber = 0;
-            
             
             $Apunte = new Apunte();
             $Apunte->setAsiento($Asiento);
@@ -82,7 +81,6 @@ class AsientoFacturaController extends Controller
             $CuentaMayor = $CuentaMayor_repo->find(95); // COMPRA MERCADERIAS 
             $Apunte->setCuentaDebe($CuentaMayor); 
             $Apunte->setImporteDebe($AsientoFacturaForm->get('importeBase')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
             
             $em->persist($Apunte);
             $em->flush();
@@ -94,8 +92,6 @@ class AsientoFacturaController extends Controller
             $CuentaMayor = $CuentaMayor_repo->find(86); // HACIENDA PÚBLICA. IVA SOPORTADO
             $Apunte->setCuentaDebe($CuentaMayor); 
             $Apunte->setImporteDebe($AsientoFacturaForm->get('cuotaIva')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
-            
             $em->persist($Apunte);
             $em->flush();
             
@@ -110,12 +106,8 @@ class AsientoFacturaController extends Controller
             $Apunte->setCuentaHaber($CuentaPago);
             $Apunte->setImporteHaber($AsientoFacturaForm->get('importeFactura')->getData());
             
-            $importeDebe += $Apunte->getImporteDebe();
-            $importeHaber += $Apunte->getImporteHaber();
-            
             $em->persist($Apunte);
             $em->flush();
-            
             
             $Apunte = new Apunte();
             $Apunte->setAsiento($Asiento);
@@ -131,17 +123,9 @@ class AsientoFacturaController extends Controller
             $Apunte->setCuentaHaber($CuentaMayor); 
             $Apunte->setImporteHaber($AsientoFacturaForm->get('importeBase')->getData());
             
-            $importeDebe += $Apunte->getImporteDebe();
-            $importeHaber += $Apunte->getImporteHaber();
-            
             $em->persist($Apunte);
             $em->flush();
             
-            $Asiento->setImporteDebe($importeDebe);
-            $Asiento->setImporteHaber($importeHaber);
-            
-            $em->persist($Asiento);
-            $em->flush();
             
             $status = "ASIENTO GENERADO CORRECTAMENTE";
             $this->sesion->getFlashBag()->add("status",$status);

@@ -51,11 +51,11 @@ class AsientoGastoController extends Controller
                 $Proyecto = $Proyecto_repo->find($proyecto_id);
                 $Asiento->setProyecto($Proyecto);
             }
+            $Asiento->setImporteDebe($AsientoGastoForm->get('importe')->getData());
+            $Asiento->setImporteHaber(null);
+            
             $em->persist($Asiento);
             $em->flush();
-            
-            $importeDebe = 0;
-            $importeHaber = 0;
             
             $proveedor_id = $AsientoGastoForm->get('proveedor')->getData();
             $Proveedor = $Proveedor_repo->find($proveedor_id); 
@@ -70,11 +70,9 @@ class AsientoGastoController extends Controller
             $CuentaMayor = $CuentaMayor_repo->find($cuentaMayor_id); 
             $Apunte->setCuentaDebe($CuentaMayor); 
             $Apunte->setImporteDebe($AsientoGastoForm->get('importe')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
             //haber
             $Apunte->setCuentaHaber($Proveedor->getCuentaMayor());  // CUENTA PROVEEDOR 
             $Apunte->setImporteHaber($AsientoGastoForm->get('importe')->getData());
-            $importeHaber += $Apunte->getImporteHaber();
             
             $em->persist($Apunte);
             $em->flush();
@@ -87,13 +85,11 @@ class AsientoGastoController extends Controller
             //DEBE
             $Apunte->setCuentaDebe($Proveedor->getCuentaMayor());  // CUENTA PROVEEDOR 
             $Apunte->setImporteDebe($AsientoGastoForm->get('importe')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
             //HABET 
             $cuentaPago_id = $AsientoGastoForm->get('cuentaPago')->getdata();
             $CuentaMayor = $CuentaMayor_repo->find($cuentaPago_id);
             $Apunte->setCuentaHaber($CuentaMayor);
             $Apunte->setImporteHaber($AsientoGastoForm->get('importe')->getData());
-            $importeHaber += $Apunte->getImporteHaber();
             
             $em->persist($Apunte);
             $em->flush();
@@ -108,20 +104,14 @@ class AsientoGastoController extends Controller
             $CuentaMayor = $CuentaMayor_repo->find($cuentaGasto_id);
             $Apunte->setCuentaDebe($CuentaMayor); // CUENTA DE GASTO
             $Apunte->setImporteDebe($AsientoGastoForm->get('importe')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
             //HABER
             $CuentaMayor = $CuentaMayor_repo->find(95); // COMPRA MERCADERIAS 
             $Apunte->setCuentaHaber($CuentaMayor); 
             $Apunte->setImporteHaber($AsientoGastoForm->get('importe')->getData());
-            $importeHaber += $Apunte->getImporteHaber();
             
             $em->persist($Apunte);
             $em->flush();
             
-            $Asiento->setImporteDebe($importeDebe);
-            $Asiento->setImporteHaber($importeHaber);
-            $em->persist($Asiento);
-            $em->flush();
             
             $status = "ASIENTO GENERADO CORRECTAMENTE";
             $this->sesion->getFlashBag()->add("status",$status);

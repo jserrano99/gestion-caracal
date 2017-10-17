@@ -27,6 +27,9 @@
                         <td class="text-center">
                         <a href="{{path("editProyecto",{ "id":Proyecto.id })}}" 
                               class="btn btn-warning">Editar</a>
+                        <a href="{{path("resumenProyecto",{"id":Proyecto.id })}}" 
+                           target="_blank"
+                           class="btn btn-info">Asientos</a>
                         <input type="button" id="boton-cierre" 
                                   class="btn btn-danger" value="Eliminar" onClick="EliminarProyecto({{Proyecto.id}})">
                         </td>

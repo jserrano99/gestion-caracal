@@ -51,11 +51,12 @@ class AsientoIngresoController extends Controller
                 $Proyecto = $Proyecto_repo->find($proyecto_id);
                 $Asiento->setProyecto($Proyecto);
             }
+            $Asiento->setDescripcion($AsientoIngresoForm->get('descripcion')->getData());
+            $Asiento->setImporteDebe(null);
+            $Asiento->setImporteHaber($AsientoIngresoForm->get('importe')->getData());
+            
             $em->persist($Asiento);
             $em->flush();
-            
-            $importeDebe = 0;
-            $importeHaber = 0;
             
             // CUENTA DESTINO A CUENTA DE INGRESO 
             $Apunte = new Apunte();
@@ -69,20 +70,11 @@ class AsientoIngresoController extends Controller
             $Apunte->setDescripcion($CuentaIngreso->getDescripcion());
             $Apunte->setCuentaDebe($CuentaDestino); 
             $Apunte->setImporteDebe($AsientoIngresoForm->get('importe')->getData());
-            $importeDebe += $Apunte->getImporteDebe();
             
             $Apunte->setCuentaHaber($CuentaIngreso); 
             $Apunte->setImporteHaber($AsientoIngresoForm->get('importe')->getData());
-            $importeHaber += $Apunte->getImporteHaber();
             
             $em->persist($Apunte);
-            $em->flush();
-            
-            $Asiento->setDescripcion($CuentaIngreso->getDescripcion());
-            $Asiento->setImporteDebe($importeDebe);
-            $Asiento->setImporteHaber($importeHaber);
-            
-            $em->persist($Asiento);
             $em->flush();
             
             $status = "ASIENTO GENERADO CORRECTAMENTE";

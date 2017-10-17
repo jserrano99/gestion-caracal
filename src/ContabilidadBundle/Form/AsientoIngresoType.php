@@ -30,8 +30,8 @@ class AsientoIngresoType extends AbstractType
                                     "attr" => array (
                                         'class' => 'form-control js-datepicker',
                                         'data-date-format' => 'dd-mm-yyyy')))
-                ->add('observaciones', TextareaType::class, array (
-                                    "label" => 'Observaciones',
+                ->add('descripcion', TextareaType::class, array (
+                                    "label" => 'Descripción',
                                     "required" => false,
                                     "attr" => array ("class" => "form-control")))
                 ->add('importe', TextType::class, array (

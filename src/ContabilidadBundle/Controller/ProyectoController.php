@@ -5,9 +5,11 @@ namespace ContabilidadBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use ContabilidadBundle\Entity\Proyecto;
 use ContabilidadBundle\Form\ProyectoType;
+use ContabilidadBundle\Reports\ResumenProyecto;
 
 class ProyectoController extends Controller
 {
@@ -82,5 +84,20 @@ class ProyectoController extends Controller
         $this->sesion->getFlashBag()->add("status",$status);
         return $this->redirectToRoute("queryProyecto");
     }
+    
+    public function ResumenAction($id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Asiento_repo = $EntityManager->getRepository("ContabilidadBundle:Asiento");
+        $Proyecto_repo = $EntityManager->getRepository("ContabilidadBundle:Proyecto");
+        $Proyecto = $Proyecto_repo->find($id);
+        $Asientos = $Asiento_repo->queryByProyecto($id);
+        $rootDir= $this->get('kernel')->getRootDir();
+	    $pdf = new ResumenProyecto('P','mm','A4',$Proyecto, $Asientos, $rootDir);
+
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+	}
+  
+    
 }
   
