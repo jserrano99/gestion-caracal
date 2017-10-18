@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ContabilidadBundle\Reports\LibroMayor;
 use ContabilidadBundle\Reports\LibroDiario;
 use ContabilidadBundle\Reports\Balance;
+use ContabilidadBundle\Reports\CuentaResultados;
 
 class EjercicioController extends Controller
 {
@@ -179,6 +180,26 @@ class EjercicioController extends Controller
         $Apuntes = $Apunte_repo->queryBalance($ejercicio_id);
         $rootDir= $this->get('kernel')->getRootDir();
         $pdf = new Balance('P','mm','A4',$Ejercicio, $Apuntes, $rootDir);
+
+        return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));
+    }
+    
+    public function CuentaResultadosAction($ejercicio_id) {
+        $EntityManager = $this->getDoctrine()->getManager();
+        $Ejercicio_repo = $EntityManager->getRepository("ContabilidadBundle:Ejercicio");
+        $Apunte_repo = $EntityManager->getRepository("ContabilidadBundle:Apunte");
+        $EjercicioActual_repo = $EntityManager->getRepository("ContabilidadBundle:EjercicioActual");
+        $EjercicioActual = $EjercicioActual_repo->find(1);
+        if ($ejercicio_id == null ) {
+            $ejercicio_id = $EjercicioActual->getEjercicio()->getId();
+        } 
+        
+        $Ejercicio = $Ejercicio_repo->find($ejercicio_id);
+        $Apuntes = $Apunte_repo->queryCuentaResultados($ejercicio_id);
+        $Resultado = $Apunte_repo->resultadoEjercicio($ejercicio_id);
+        $rootDir= $this->get('kernel')->getRootDir();
+        $pdf = new CuentaResultados('P','mm','A4',$Ejercicio, $Apuntes, $rootDir,$Resultado);
 
         return new Response($pdf->Output(), 200, array(
             'Content-Type' => 'application/pdf'));

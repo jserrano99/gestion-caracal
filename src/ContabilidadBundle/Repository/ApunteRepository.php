@@ -202,4 +202,91 @@ class ApunteRepository extends \Doctrine\ORM\EntityRepository
 		
 		return $po;
     }
+
+    public function queryCuentaResultados($ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = "delete from cuenta_resultados where ejercicio_id  = :ejercicio_id ";
+        
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+        
+        $query =  "insert into cuenta_resultados ( "
+                ." select  asientos.ejercicio_id as ejercicio_id ,"
+				."		    estr_cuenta_resultados.nivel1 as nivel1 ,"
+                ."          estr_cuenta_resultados.nivel2 as nivel2 ,"
+                ."          estr_cuenta_resultados.nivel3 as nivel3 ,"
+                ."          concat(cuentas_mayor.codigo,'-',cuentas_mayor.descripcion) as cuenta_mayor ,"
+                ."          apuntes.importe_debe as importe_debe ,"
+                ."          0 as importe_haber ,"
+                ."			estr_cuenta_resultados.multiplicador as multiplicador "
+                ."  from apuntes "
+                ."  INNER JOIN estr_cuenta_resultados on estr_cuenta_resultados.cuenta_mayor_id = apuntes.cuenta_debe_id "
+                ."  INNER JOIN cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_debe_id "
+                ."  INNER JOIN asientos on asientos.id = apuntes.asiento_id"
+                ."  where asientos.ejercicio_id = :ejercicio_id ) ";
+        
+		$stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+        
+        $query =  "insert into cuenta_resultados ( "
+                ." select  asientos.ejercicio_id as ejercicio_id ,"
+				."		    estr_cuenta_resultados.nivel1 as nivel1 ,"
+                ."          estr_cuenta_resultados.nivel2 as nivel2 ,"
+                ."          estr_cuenta_resultados.nivel3 as nivel3 ,"
+                ."          concat(cuentas_mayor.codigo,'-',cuentas_mayor.descripcion) as cuenta_mayor ,"
+                ."          0 as importe_debe ,"
+                ."          apuntes.importe_haber as importe_haber ,"
+                ."			estr_cuenta_resultados.multiplicador as multiplicador "
+                ."  from apuntes "
+                ."  INNER JOIN estr_cuenta_resultados on estr_cuenta_resultados.cuenta_mayor_id = apuntes.cuenta_haber_id "
+                ."  INNER JOIN cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_haber_id "
+                ."  INNER JOIN asientos on asientos.id = apuntes.asiento_id"
+                ."  where asientos.ejercicio_id = :ejercicio_id ) ";
+        
+		$stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+        
+        $query = " select ejercicio_id "
+                ." ,nivel1 "
+                ." ,nivel2 "
+                ." ,nivel3 "
+                ." ,cuenta_mayor "
+                ." ,sum(importe_haber - importe_debe ) AS SALDO "
+                ." from cuenta_resultados  "
+                ." where ejercicio_id = :ejercicio_id "
+                ." group by ejercicio_id,nivel1,nivel2,nivel3,cuenta_mayor" ;
+        
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+        
+        $po = $stmt->fetchAll();
+		
+		return $po;
+    }
+    
+    public function resultadoEjercicio($ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = " select ejercicio_id "
+                ." ,sum(importe_haber - importe_debe ) AS SALDO "
+                ." from cuenta_resultados  "
+                ." where ejercicio_id = :ejercicio_id "
+                ." group by ejercicio_id" ;
+        
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+        
+        $po = $stmt->fetch();
+		
+		return $po["SALDO"];
+    }
+
 }

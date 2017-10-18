@@ -141,7 +141,6 @@ class ResumenProyecto extends \FPDF {
     public function genera($Asientos) {
         $relleno=true;
         $borde=false;
-        $antCuentaMayor = 99999;
         define('EURO', chr(128));
         $this->AddPage();
         $this->AliasNbPages();
@@ -157,14 +156,16 @@ class ResumenProyecto extends \FPDF {
             $this->Cell(6,5,$Asiento["numero"],$borde,0,'C',$relleno);
             $this->Cell(20,5,$Asiento['fecha'],$borde,0,'c',$relleno);
             $this->Cell(95,5, utf8_decode($Asiento['descripcion']),$borde,0,'L',$relleno);
-            if ( $Asiento['importeDebe'] == 0 )
+            if ( $Asiento['importeDebe'] == 0 ) {
                 $this->Cell(20,5,'',$borde,0,'R',$relleno);
-            else
+            } else {
                 $this->Cell(20,5,number_format($Asiento['importeDebe'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
-            if ( $Asiento['importeHaber'] == 0 )
+            }
+            if ( $Asiento['importeHaber'] == 0 ) {
                 $this->Cell(20,5,'',$borde,0,'R',$relleno);
-            else
+            } else {
                 $this->Cell(20,5,number_format($Asiento['importeHaber'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
+            }
             $this->Ln();
         }
         $this->totales();
