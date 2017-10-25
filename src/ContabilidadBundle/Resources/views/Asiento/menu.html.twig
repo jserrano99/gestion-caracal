@@ -4,6 +4,22 @@
         <li><a href="{{path("contabilidad_homepage")}}">Contabilidad</a></li>
         <li><a href="{{path("queryEjercicio")}}">Ejercicios</a></li>
         <li><a href="{{path("queryCuentaMayor")}}">Cuentas de Mayor</a></li>
+		<li class="dropdown">
+            <a href="#" 
+               class="dropdown-toggle" 
+               data-toggle="dropdown" 
+               role="button" 
+               aria-haspopup="true" 
+               aria-expanded="false">Informes Gestión<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{path("libroDiario")}}" target="_blank" >Libro Diario</a></li>
+                <li><a href="{{path("libroMayor")}}" target="_blank" >Libro Mayor</a></li>
+                <li><a href="{{path("repBalance")}}" target="_blank" >Balance</a></li>
+                <li><a href="{{path("repCuentaResultados")}}" target="_blank">Cuenta Resultados</a></li>
+				<li><a href="{{path("saldosCuentaMayor")}}" target="_blank">Saldos Cuenta Mayor</a></li>
+
+            </ul>
+        </li>
         <li class="dropdown">
             <a href="#" 
                class="dropdown-toggle" 

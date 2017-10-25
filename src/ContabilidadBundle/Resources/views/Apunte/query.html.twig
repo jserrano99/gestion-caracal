@@ -4,6 +4,7 @@
     Asiento: {{Asiento.numero}} Fecha: {{Asiento.fecha|date('d/m/Y')}}--{{Asiento.descripcion }}
     <br/>
     <a href="{{path("queryAsiento",{"asiento_id":Asiento.id})}}" class="btn btn-success">Volver</a>
+	<a href="{{path("addApunte",{"asiento_id":Asiento.id})}}" class="btn btn-success">Añadir</a>
     <hr/>
 {% endblock %}
 {% block contenido %}
@@ -38,6 +39,8 @@
                         <td class="text-center">
                            <a href="{{path("editApunte",{"id":Apunte.id})}}" 
                               class="btn btn-success">Editar</a>
+							  <a href="{{path("deleteApunte",{"id":Apunte.id})}}" 
+                              class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

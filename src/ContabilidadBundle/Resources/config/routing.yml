@@ -10,6 +10,9 @@ repBalance:
 repCuentaResultados:
     path: /Contabilidad/Informes/CuentaResultados/{ejercicio_id}
     defaults: {_controller: ContabilidadBundle:Ejercicio:CuentaResultados, ejercicio_id: null}
+saldosCuentaMayor:
+    path: /Contabilidad/Informes/SaldosCuentaMayor/{ejercicio_id}
+    defaults: {_controller: ContabilidadBundle:Ejercicio:SaldosCuentaMayor, ejercicio_id: null}
     
      
 apuntesCuentaMayor:

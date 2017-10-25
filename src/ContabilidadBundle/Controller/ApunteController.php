@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Request;
 use ContabilidadBundle\Form\ApunteType;
+use ContabilidadBundle\Entity\Apunte;
 
 class ApunteController extends Controller
 {
@@ -29,6 +30,23 @@ class ApunteController extends Controller
         return $this->render ('ContabilidadBundle:Apunte:query.html.twig', $params);
                 
     }
+    public function DeleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $Apunte_repo = $em->getRepository("ContabilidadBundle:Apunte");
+        $CuentaMayor_repo = $em->getRepository("ContabilidadBundle:CuentaMayor");
+        
+
+        $Apunte = $Apunte_repo->find($id);
+        
+		$em->remove($Apunte);
+		$em->flush();
+
+		$status = "APUNTE ELIMINADO CORRECTAMENTE";
+		$this->sesion->getFlashBag()->add("status",$status);
+		$params = ["asiento_id" => $Apunte->getAsiento()->getId() ];
+		return $this->redirectToRoute("queryApunte",$params);
+        
+    }
     
     public function EditAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
@@ -41,11 +59,11 @@ class ApunteController extends Controller
         $ApunteForm->handleRequest($request);
         
         if ( $ApunteForm->isSubmitted()){
-            $Apunte->getNumero($ApunteForm->get('numero')->getData());
-            $Apunte->getDescripcion($ApunteForm->get('descripcion')->getData());
-            $Apunte->getObservaciones($ApunteForm->get('observaciones')->getData());
-            $Apunte->getImporteDebe($ApunteForm->get('importeDebe')->getData());
-            $Apunte->getImporteHaber($ApunteForm->get('importeHaber')->getData());
+            $Apunte->setNumero($ApunteForm->get('numero')->getData());
+            $Apunte->setDescripcion($ApunteForm->get('descripcion')->getData());
+            $Apunte->setObservaciones($ApunteForm->get('observaciones')->getData());
+            $Apunte->setImporteDebe($ApunteForm->get('importeDebe')->getData());
+            $Apunte->setImporteHaber($ApunteForm->get('importeHaber')->getData());
             
             $cuentaDebe_id = $ApunteForm->get('cuentaDebe')->getData();
             if ($cuentaDebe_id )  {
@@ -74,5 +92,55 @@ class ApunteController extends Controller
         return $this->render("ContabilidadBundle:Apunte:edit.html.twig", $params);
     }
     
+	public function AddAction(Request $request, $asiento_id) {
+        $em = $this->getDoctrine()->getManager();
+		$Asiento_repo = $em->getRepository("ContabilidadBundle:Asiento");
+        $Apunte_repo = $em->getRepository("ContabilidadBundle:Apunte");
+        $CuentaMayor_repo = $em->getRepository("ContabilidadBundle:CuentaMayor");
+        
+
+        $Apunte = new Apunte();
+		$Asiento = $Asiento_repo->find($asiento_id);
+		$Apunte->setAsiento($Asiento);
+		$Apunte->setNumero($Apunte_repo->siguienteApunte($asiento_id));
+		$Apunte->setDescripcion("NUEVO APUNTE");
+		
+        $ApunteForm = $this->createForm(ApunteType::class,$Apunte);
+        $ApunteForm->handleRequest($request);
+        
+        if ( $ApunteForm->isSubmitted()){
+            $Apunte->setNumero($ApunteForm->get('numero')->getData());
+            $Apunte->setDescripcion($ApunteForm->get('descripcion')->getData());
+            $Apunte->setObservaciones($ApunteForm->get('observaciones')->getData());
+            $Apunte->setImporteDebe($ApunteForm->get('importeDebe')->getData());
+            $Apunte->setImporteHaber($ApunteForm->get('importeHaber')->getData());
+            
+            $cuentaDebe_id = $ApunteForm->get('cuentaDebe')->getData();
+            if ($cuentaDebe_id )  {
+                $CuentaDebe = $CuentaMayor_repo->find($cuentaDebe_id);
+                $Apunte->setCuentaDebe($CuentaDebe);
+            }
+            
+            $cuentaHaber_id = $ApunteForm->get('cuentaHaber')->getData();
+            if ($cuentaHaber_id )  {
+                $CuentaHaber =  $CuentaMayor_repo->find($cuentaHaber_id);
+                $Apunte->setCuentaHaber($CuentaHaber);
+            }
+            
+            $em->persist($Apunte);
+            $em->flush();
+            
+            $status = "APUNTE CREADO CORRECTAMENTE";
+            $this->sesion->getFlashBag()->add("status",$status);
+            $params = ["asiento_id" => $Apunte->getAsiento()->getId() ];
+            return $this->redirectToRoute("queryApunte",$params);
+        }
+        
+        $params = ["form" => $ApunteForm->createView(),
+                   "Apunte" => $Apunte];
+        
+        return $this->render("ContabilidadBundle:Apunte:edit.html.twig", $params);
+    }
+   
 }
   

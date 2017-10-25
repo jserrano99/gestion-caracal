@@ -23,7 +23,7 @@
             bootbox.confirm("Confirmar el Cierre de Ejercicio " + id, 
                  function(result){
                      if (result) {
-                        var url =Routing.generate("cerrarEjercicio",{"id":id},true);
+                        var url =Routing.generate("cierreEjercicio",{"id":id},true);
                         window.location = url;                     } 
                  });
     }

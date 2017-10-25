@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use ContabilidadBundle\Repository\CuentaMayorRepository;
 
 class ApunteType extends AbstractType
 {
@@ -30,6 +31,9 @@ class ApunteType extends AbstractType
                                     "label"=> 'Cuenta Debe',
                                     "placeholder" => " Seleccione Cuenta de Mayor.... ",
                                     "required" => false,
+                                    'query_builder' => function (CuentaMayorRepository $er) {
+                                                        return $er->createQueryBuilder('u')
+                                                        ->orderBy('u.codigo', 'ASC');},
                                     "class" => 'ContabilidadBundle:CuentaMayor',
                                     "attr" => array("class" => "form-control")))
                 ->add('importeDebe', TextType::class, array (
@@ -41,6 +45,9 @@ class ApunteType extends AbstractType
                                     "placeholder" => " Seleccione Cuenta de Mayor.... ",
                                     "class" => 'ContabilidadBundle:CuentaMayor',
                                     "required" => false,
+                                    'query_builder' => function (CuentaMayorRepository $er) {
+                                                        return $er->createQueryBuilder('u')
+                                                        ->orderBy('u.codigo', 'ASC');},
                                     "attr" => array("class" => "form-control")))
                 ->add('importeHaber', TextType::class, array (
                                     "label" => 'Importe Haber',

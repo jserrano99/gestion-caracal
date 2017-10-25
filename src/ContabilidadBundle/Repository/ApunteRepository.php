@@ -10,6 +10,21 @@ namespace ContabilidadBundle\Repository;
  */
 class ApunteRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function siguienteApunte($asiento_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        $query = " select max(numero)+1 as numero from apuntes where asiento_id = :asiento_id";
+        $stmt = $db->prepare($query);
+		$params = Array("asiento_id" => $asiento_id);
+		$stmt->execute($params);
+		$po = $stmt->fetch();
+		if ( $po["numero"] ) {  
+			return $po{"numero"};
+		} else {
+			return 1;
+		}
+    }
+    
     public function queryByAsiento($asiento_id) {
         $em = $this->getEntityManager();
 		$db = $em->getConnection();
@@ -189,7 +204,7 @@ class ApunteRepository extends \Doctrine\ORM\EntityRepository
                 ." ,nivel3 "
                 ." ,nivel4 "
                 ." ,cuenta_mayor "
-                ." , multiplicador * sum(`importe_debe`-`importe_haber`) AS SALDO "
+                ." ,sum(importe_debe - importe_haber) AS SALDO "
                 ." from balance  "
                 ." where ejercicio_id = :ejercicio_id "
                 ." group by ejercicio_id,nivel0,nivel1,nivel2,nivel3,nivel4,cuenta_mayor,multiplicador" ;
@@ -289,4 +304,80 @@ class ApunteRepository extends \Doctrine\ORM\EntityRepository
 		return $po["SALDO"];
     }
 
+    public function sumaImporteDebe($ejercicio_id, $cuentaMayor_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = " select sum(apuntes.importe_debe) as importeDebe" 
+                ." from apuntes "
+                ."    inner join asientos on asientos.id = apuntes.asiento_id   "
+                ." where asientos.ejercicio_id = :ejercicio_id "
+                ." and apuntes.cuenta_debe_id = :cuentaMayor_id ";
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id,
+                        ":cuentaMayor_id" => $cuentaMayor_id);
+        $stmt->execute($params);
+		$po = $stmt->fetch();
+        return $po["importeDebe"];
+
+    }
+    
+    public function sumaImporteHaber($ejercicio_id, $cuentaMayor_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+        $query = " select sum(apuntes.importe_haber) as importeHaber" 
+                ." from apuntes "
+                ."    inner join asientos on asientos.id = apuntes.asiento_id   "
+                ." where asientos.ejercicio_id = :ejercicio_id "
+                ." and apuntes.cuenta_haber_id = :cuentaMayor_id ";
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id,
+                        ":cuentaMayor_id" => $cuentaMayor_id);
+        $stmt->execute($params);
+		$po = $stmt->fetch();
+        return $po["importeHaber"];
+
+    }
+	
+	public function saldosGastos ($ejercicio_id) {
+		$em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+		$query = " select  cuentas_mayor.id as cuentaMayor_id "
+				."	,sum(apuntes.importe_debe) as importe "
+				."	from apuntes "
+				."	inner join asientos on asientos.id = apuntes.asiento_id"
+				."  inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_debe_id "
+				."	where asientos.ejercicio_id= :ejercicio_id "
+				."	and cuentas_mayor.grupo_cuentas_id = 6 " // CEUNTAS DE GASTOS
+				."	and cuentas_mayor.id != 95" // COMPRA DE MERCDERIAS
+				."	GROUP by cuentaMayor_id";
+		
+		$stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+		$stmt->execute($params);
+		$po = $stmt->fetchAll();
+        return $po;
+	}
+	
+	public function saldosIngresos($ejercicio_id) {
+		$em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+		$query = " select  cuentas_mayor.id as cuentaMayor_id "
+				."	,sum(apuntes.importe_haber) as importe "
+				."	from apuntes "
+				."	inner join asientos on asientos.id = apuntes.asiento_id"
+				."  inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_haber_id "
+				."	where asientos.ejercicio_id= :ejercicio_id "
+				."	and cuentas_mayor.grupo_cuentas_id = 7 " // CEUNTAS DE ingresos
+				."	GROUP by cuentaMayor_id";
+		
+		$stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+		$po = $stmt->fetchAll();
+        return $po;
+	}
 }

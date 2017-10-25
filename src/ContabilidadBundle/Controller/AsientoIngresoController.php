@@ -45,13 +45,12 @@ class AsientoIngresoController extends Controller
             $Asiento->setEjercicio($Ejercicio);
             $Asiento->setNumero($Asiento_repo->siguienteAsiento());
             $Asiento->setFecha($AsientoIngresoForm->get('fecha')->getdata());
-            $Asiento->setObservaciones($AsientoIngresoForm->get('observaciones')->getData());
+            $Asiento->setDescripcion($AsientoIngresoForm->get('descripcion')->getData());
             $proyecto_id = $AsientoIngresoForm->get('proyecto')->getData();
             if ( $proyecto_id) {
                 $Proyecto = $Proyecto_repo->find($proyecto_id);
                 $Asiento->setProyecto($Proyecto);
             }
-            $Asiento->setDescripcion($AsientoIngresoForm->get('descripcion')->getData());
             $Asiento->setImporteDebe(null);
             $Asiento->setImporteHaber($AsientoIngresoForm->get('importe')->getData());
             

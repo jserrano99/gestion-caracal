@@ -9,13 +9,35 @@ class LibroDiario extends \FPDF {
 	private $rootDir;
 	
     private $cuentaMayor;
-    
+     
     private $asientoNumero;
     
     private $asientoFecha;
     
     private $asientoDescripcion;
+	
+	private $totalDebe;
+	
+	Private $totalHaber;
+	
+    public function setTotalDebe($totalDebe) {
+        $this->totalDebe = $totalDebe;
+        return $this;
+    }
     
+    public function getTotalDebe() { 
+        return $this->totalDebe;
+    }
+    
+	public function setTotalHaber($totalHaber) {
+        $this->totalHaber = $totalHaber;
+        return $this;
+    }
+    
+    public function getTotalHaber() { 
+        return $this->totalHaber;
+    }
+	
     public function setAsientoDescripcion($asientoDescripcion) {
         $this->asientoDescripcion = $asientoDescripcion;
         return $this;
@@ -122,14 +144,30 @@ class LibroDiario extends \FPDF {
             $this->Ln();
         }
     }
+	
+	function totalAsiento() {
+		$saldo = $this->totalDebe - $this->totalHaber;
+		$this->cell(230,5,'',0,'R',0);
+		$this->Cell(25,5,number_format($this->totalDebe,2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
+		$this->Cell(25,5,number_format($this->totalHaber,2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
+		$this->Cell(25,5,number_format($saldo,2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
+		$this->totalDebe=0;
+		$this->totalHaber=0;
+	}
     
     public function genera($Apuntes) { 
         $this->AddPage();
         $this->AliasNbPages(); 
         define('EURO', chr(128));
         $antAsiento = 0;
+		$ImporteHaber = 0;
+		$ImporteDebe = 0;
+		$saldo = 0;
         foreach ($Apuntes as $Apunte){
             if ($Apunte["asientoId"] != $antAsiento) {
+				if ($this->totalDebe != 0 or $this->totalHaber != 0 ) {
+					$this->totalAsiento();
+				}
                 $antAsiento = $Apunte["asientoId"];
                 $this->asientoNumero = $Apunte['asientoNumero'];
                 $this->asientoFecha =  $Apunte['asientoFecha'];
@@ -148,6 +186,7 @@ class LibroDiario extends \FPDF {
                 $this->Cell(150,5,utf8_decode($Apunte['cuentaDebe']),0,0,'L',0);
                 $this->Cell(25,5,number_format($Apunte['importeDebe'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
                 $this->ln();
+				$this->totalDebe += $Apunte['importeDebe'];
             }
             if ( $Apunte['importeHaber'] > 0 ) {
                 $this->Cell(80,5,'',0,0,'C',0);
@@ -155,7 +194,8 @@ class LibroDiario extends \FPDF {
                 $this->Cell(25,5,'',0,0,'C',0);
                 $this->Cell(25,5,number_format($Apunte['importeHaber'],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
                 $this->Ln();
-            }
+ 				$this->totalHaber += $Apunte['importeHaber'];
+           }
         }    
    }
    

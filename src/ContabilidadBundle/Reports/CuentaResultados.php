@@ -173,7 +173,7 @@ class CuentaResultados extends \FPDF {
             }
             if ($antNivel2 != $Apunte["nivel2"]) {
                 if ($this->total2 != 0 ) {
-                     $this->lineaTotal3($antNivel3);
+                    $this->lineaTotal3($antNivel3);
                     $this->lineaTotal2($antNivel2);
                 }
                 

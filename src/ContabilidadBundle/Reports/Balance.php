@@ -104,7 +104,7 @@ class Balance extends \FPDF {
         $this->SetMargins(3,3);
         $this->image($this->rootDir.'/src/img/LogoCaracal.png',2,2,25,30);
         $this->SetFont('Arial','B',8);
-        $this->Cell(200,10,'Fecha: '.date('d/m/Y'),0,0,'R');
+        $this->Cell(200,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
         $this->Ln(5);
         $this->SetFont('Arial','B',15);
         $this->Cell(210,10,'C.D.B CARACAL FUENLABRADA ',0,0,'C');
@@ -126,43 +126,43 @@ class Balance extends \FPDF {
     public function lineaTotal0($nivel) {
         $this->SetFont('Arial','B',12);
         define('EURO', chr(128));
-        $this->Cell(190,10, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,10,number_format($this->total0,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(190,8, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,8,number_format($this->total0,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->total0=0;
     }
     public function lineaTotal1($nivel) {
         $this->SetFont('Arial','',10);
         define('EURO', chr(128));
-        $this->Cell(3,5, ' ',$borde,0,'L',$relleno);
-        $this->Cell(187,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total1,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(3,8, ' ',0,0,'L',1);
+        $this->Cell(187,8, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,8,number_format($this->total1,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total1=0;
     }
     public function lineaTotal2($nivel) {
         $this->SetFont('Arial','',10);
         define('EURO', chr(128));
-        $this->Cell(5,5, ' ',$borde,0,'L',$relleno);
-        $this->Cell(185,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total2,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(5,8, ' ',0,0,'L',1);
+        $this->Cell(185,8, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,8,number_format($this->total2,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total2=0;
     }
     public function lineaTotal3($nivel) {
         $this->SetFont('Arial','',10);
         define('EURO', chr(128));
-        $this->Cell(8,5, ' ',$borde,0,'L',$relleno);
-        $this->Cell(182,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total3,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(8,8, ' ',0,0,'L',1);
+        $this->Cell(182,8, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,8,number_format($this->total3,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total3=0;
     }
     public function lineaTotal4($nivel) {
         $this->SetFont('Arial','',10);
         define('EURO', chr(128));
-        $this->Cell(10,5, ' ',$borde,0,'L',$relleno);
-        $this->Cell(180,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total4,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(10,8, ' ',0,0,'L',1);
+        $this->Cell(180,8, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,8,number_format($this->total4,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total4=0;
     }
@@ -191,7 +191,7 @@ class Balance extends \FPDF {
                 $this->SetFillColor(230);
                 $antNivel0 = $Apunte["nivel0"];
                 $this->SetFont('Arial','B',12);
-                $this->Cell(190,10, utf8_decode($Apunte["nivel0"]),$borde,0,'L',$relleno);
+                $this->Cell(190,8, utf8_decode($Apunte["nivel0"]),0,0,'L',0);
                 $this->Ln();
             }
             if ($antNivel1 != $Apunte["nivel1"]) {
@@ -203,8 +203,8 @@ class Balance extends \FPDF {
                 }
                 $antNivel1 = $Apunte["nivel1"];
                 $this->SetFont('Arial','I',10);
-                $this->Cell(3,8, ' ',$borde,0,'L',$relleno);
-                $this->Cell(180,8, utf8_decode($Apunte["nivel1"]),$borde,0,'L',$relleno);
+                $this->Cell(3,8, ' ',0,0,'L',0);
+                $this->Cell(180,8, utf8_decode($Apunte["nivel1"]),0,0,'L',0);
                 $this->Ln();
             }
             if ($antNivel2 != $Apunte["nivel2"]) {
@@ -216,8 +216,8 @@ class Balance extends \FPDF {
                 
                 $antNivel2 = $Apunte["nivel2"];
                 $this->SetFont('Arial','',10);
-                $this->Cell(5,5, ' ',$borde,0,'L',$relleno);
-                $this->Cell(190,5, utf8_decode($Apunte["nivel2"]),$borde,0,'L',$relleno);
+                $this->Cell(5,8, ' ',0,0,'L',0);
+                $this->Cell(190,8, utf8_decode($Apunte["nivel2"]),0,0,'L',0);
                 $this->Ln();
                 
             }
@@ -228,8 +228,8 @@ class Balance extends \FPDF {
                 }
                 $antNivel3 = $Apunte["nivel3"];
                 $this->SetFont('Arial','',10);
-                $this->Cell(8,5, ' ',$borde,0,'L',$relleno);
-                $this->Cell(180,5, utf8_decode($Apunte["nivel3"]),$borde,0,'L',$relleno);
+                $this->Cell(8,8, ' ',0,0,'L',0);
+                $this->Cell(180,8, utf8_decode($Apunte["nivel3"]),0,0,'L',0);
                 $this->Ln();
             }
             
@@ -239,14 +239,14 @@ class Balance extends \FPDF {
                 }
                 $antNivel4 = $Apunte["nivel4"];
                 $this->SetFont('Arial','',10);
-                $this->Cell(10,5, ' ',$borde,0,'L',$relleno);
-                $this->Cell(155,5, utf8_decode($Apunte["nivel4"]),$borde,0,'L',$relleno);
+                $this->Cell(10,8, ' ',0,0,'L',0);
+                $this->Cell(155,8, utf8_decode($Apunte["nivel4"]),0,0,'L',0);
                 $this->Ln();
             }
             $this->SetFont('Arial','',8);
-            $this->Cell(13,5, ' ',$borde,0,'L',$relleno);
-            $this->Cell(160,5, utf8_decode($Apunte["cuenta_mayor"]),$borde,0,'L',$relleno);
-            $this->Cell(20,5,number_format($Apunte["SALDO"],2, ',', '.').' '.EURO,$borde,0,'R',$relleno);
+            $this->Cell(13,6, ' ',0,0,'L',0);
+            $this->Cell(160,6, utf8_decode($Apunte["cuenta_mayor"]),0,0,'L',0);
+            $this->Cell(20,6,number_format($Apunte["SALDO"],2, ',', '.').' '.EURO,0,0,'R',0);
             $this->ln();
             $this->total4 += $Apunte["SALDO"];
             $this->total3 += $Apunte["SALDO"];

@@ -60,4 +60,58 @@ class CuentaMayorRepository extends \Doctrine\ORM\EntityRepository
 		return $po;
     }
    
+	  public function querySaldos($ejercicio_id) {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        
+		$query = " delete from saldos";
+		$stmt = $db->prepare($query);
+		$params = array();
+        $stmt->execute($params);
+		
+        $query = " insert into saldos select asientos.ejercicio_id  "
+				. " ,concat(cuentas_mayor.codigo,'--',cuentas_mayor.descripcion) as cuentaMayor "
+                ."    ,sum(apuntes.importe_debe) as importeDebe "
+				."	  ,sum(0) as importeHaber"
+                ." from apuntes "
+                ."   inner join asientos on asientos.id = apuntes.asiento_id "
+                ."   inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_debe_id "
+                ." where asientos.ejercicio_id = :ejercicio_id "
+				." group by asientos.ejercicio_id, cuentaMayor";
+		
+		
+		$stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+		
+        $query = " insert into saldos select asientos.ejercicio_id "
+				." , concat(cuentas_mayor.codigo,'--',cuentas_mayor.descripcion) as cuentaMayor "
+                ."    ,sum(0)  as importeDebe "
+                ."    ,sum(apuntes.importe_haber)  as importeHaber  "
+                ." from apuntes "
+                ."   inner join asientos on asientos.id = apuntes.asiento_id "
+                ."   inner join cuentas_mayor on cuentas_mayor.id = apuntes.cuenta_haber_id "
+                ." where asientos.ejercicio_id = :ejercicio_id "
+				." group by asientos.ejercicio_id, cuentaMayor";
+				
+        $stmt = $db->prepare($query);
+		$params = array(":ejercicio_id" => $ejercicio_id);
+        $stmt->execute($params);
+		
+	    $query = " select ejercicio_id "
+				."    , cuenta_mayor as cuentaMayor"
+                ."    , sum(importe_debe)  as importeDebe "
+                ."    , sum(importe_Haber) as importeHaber  "
+				."    , sum(importe_debe)-sum(importe_haber)  as saldo "
+                ." from saldos "
+				." group by ejercicio_id, cuentaMayor";
+				
+        $stmt = $db->prepare($query);
+		$params = array();
+        $stmt->execute($params);
+		$po = $stmt->fetchAll();
+		
+		return $po;
+    }
+   
 }

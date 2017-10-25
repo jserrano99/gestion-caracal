@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ContabilidadBundle\Reports\ApuntesCuenta;
 
 class CuentaMayorController extends Controller
-{
+{ 
 	private $sesion;
     
     public function __construct(){
@@ -30,24 +30,33 @@ class CuentaMayorController extends Controller
     public function AddAction(Request $request){
         $EntityManager = $this->getDoctrine()->getManager();
         $CuentaMayor_repo = $EntityManager->getRepository("ContabilidadBundle:CuentaMayor");
-        $EstadoCuentaMayor_repo = $EntityManager->getRepository("ContabilidadBundle:EstadoCuentaMayor");
-        
+        $GrupoCuenta_repo = $EntityManager->getRepository("ContabilidadBundle:GrupoCuenta");
+        $TipoCuenta_repo = $EntityManager->getRepository("ContabilidadBundle:TipoCuenta");
+
         $CuentaMayor = new CuentaMayor();
         $CuentaMayorForm =  $this->createForm(CuentaMayorType::class, $CuentaMayor);
         $CuentaMayorForm->handleRequest($request);
         if ($CuentaMayorForm->isSubmitted()){
             $CuentaMayor = new CuentaMayor();
+            $CuentaMayor->setCodigo($CuentaMayorForm->get('codigo')->getData());
             $CuentaMayor->setDescripcion($CuentaMayorForm->get('descripcion')->getData());
-            $CuentaMayor->setFcini($CuentaMayorForm->get('fcini')->getData());
-            $CuentaMayor->setFcfin($CuentaMayorForm->get('fcfin')->getData());
-     
-            $EstadoCuentaMayor = $EstadoCuentaMayor_repo->find($CuentaMayorForm->get('estadoCuentaMayor')->getData());
-            $CuentaMayor->setEstadoCuentaMayor($EstadoCuentaMayor);
+           
+			 $grupoCuenta_id = $CuentaMayorForm->get('grupoCuenta')->getData();
+            if ($grupoCuenta_id) {
+                $GrupoCuenta = $GrupoCuenta_repo->find($grupoCuenta_id);
+                $CuentaMayor->setGrupoCuenta($GrupoCuenta);
+            }
+            
+            $tipoCuenta_id = $CuentaMayorForm->get('tipoCuenta')->getData();
+            if ($grupoCuenta_id) {
+                $TipoCuenta = $TipoCuenta_repo->find($tipoCuenta_id);
+                $CuentaMayor->setTipoCuenta($TipoCuenta);
+            }
             
             $EntityManager->persist($CuentaMayor);
             $EntityManager->flush();
             
-            $status = "EJERCICIO CREADO CORRECTAMENTE";
+            $status = "CUENTA MAYOR CREADA CORRECTAMENTE";
             $this->sesion->getFlashBag()->add("status",$status);
             return $this->redirectToRoute("queryCuentaMayor");
                 
@@ -113,7 +122,7 @@ class CuentaMayorController extends Controller
         
         $Apuntes = $CuentaMayor_repo->queryApuntes($id,$ejercicio_id);
         $rootDir= $this->get('kernel')->getRootDir();
-	    $pdf = new ApuntesCuenta('P','mm','A4',$Ejercicio, $CuentaMayor, $Apuntes, $rootDir);
+	    $pdf = new ApuntesCuenta('P','mm','A4',$Ejercicio, $Apuntes, $rootDir);
 
         return new Response($pdf->Output(), 200, array(
             'Content-Type' => 'application/pdf'));
