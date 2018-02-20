@@ -1,0 +1,44 @@
+UsuarioBundle\Entity\UsuarioConexion:
+    type: entity
+    table: usuarios_conexiones
+    indexes:
+        idx_usuario:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        dsconexion:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        usuario:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: usuario_id
+        fcconexion:
+            type: datetime
+            nullable: true
+    manyToOne:
+        usuario:
+            targetEntity: Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
