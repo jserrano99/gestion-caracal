@@ -1,6 +1,4 @@
-
-
-    
+   
 addArquero:
     path:   /Arquero/add
     defaults: { _controller: PersonaBundle:Arquero:Add}

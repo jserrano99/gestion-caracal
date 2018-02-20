@@ -10,6 +10,7 @@ imports:
     - { resource: "@CataBundle/Resources/config/services.yml" }
     - { resource: "@CompeticionBundle/Resources/config/services.yml" }
     - { resource: "@ContabilidadBundle/Resources/config/services.yml" }
+    - { resource: "@CorreoBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -68,6 +69,7 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
+
 swiftmailer:
     transport: '%mailer_transport%'
     host: '%mailer_host%'

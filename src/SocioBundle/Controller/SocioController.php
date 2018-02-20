@@ -23,8 +23,6 @@ class SocioController extends Controller
 		$EntityManager = $this->getDoctrine()->getManager();
 		$Socio_repo = $EntityManager->getRepository("SocioBundle:Socio");
 		$Socios = $Socio_repo->findAll();
-
-	   
         return $this->render('SocioBundle::query.html.twig' , array (
             "Socios" => $Socios 
         ));   
@@ -64,10 +62,14 @@ class SocioController extends Controller
 				
 			   $Persona = $Persona_repo->find($SocioForm->get('persona')->getData());
 			   $newSocio->setPersona($Persona);
+			   $Estado = $Estado_repo->find($SocioForm->get('estado')->getData());
+			   $Socio->setEstado($Estado);
+			   
 			   $Arquero = new Arquero();
 			   $Arquero->setPersona($Persona);
 			   $Arquero->setLicencia($newSocio->getNumerolicencia());
-			   $Arquero->setClub($Club_repo->find(17));
+			   $Club = $Club_repo->find(17);
+			   $Arquero->setClub($Club);
 			   $EntityManager->persist($Arquero);
                $EntityManager->persist($newSocio);
                $flush = $EntityManager->flush();

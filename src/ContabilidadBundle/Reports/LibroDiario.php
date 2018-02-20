@@ -107,8 +107,8 @@ class LibroDiario extends \FPDF {
     
     function Header() {
         $this->SetFont('arial','B',8);
-        $this->Cell(280,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
-        $this->Ln(1);
+//        $this->Cell(280,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
+//        $this->Ln(1);
         $this->SetFont('arial','B',15);
         $this->Cell(290,10,'C.D.B CARACAL FUENLABRADA ',0,0,'C');
         $this->Ln(6);

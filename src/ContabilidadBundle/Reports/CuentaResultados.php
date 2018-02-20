@@ -99,8 +99,8 @@ class CuentaResultados extends \FPDF {
         $this->SetMargins(3,3);
         $this->image($this->rootDir.'/src/img/LogoCaracal.png',2,2,25,30);
         $this->SetFont('Arial','B',8);
-        $this->Cell(200,10,'Fecha: '.date('d/m/Y'),0,0,'R');
-        $this->Ln(5);
+//        $this->Cell(200,10,'Fecha: '.date('d/m/Y'),0,0,'R');
+//        $this->Ln(5);
         $this->SetFont('Arial','B',15);
         $this->Cell(210,10,'C.D.B CARACAL FUENLABRADA ',0,0,'C');
         $this->Ln(7);
@@ -120,25 +120,25 @@ class CuentaResultados extends \FPDF {
 
     public function lineaTotal1($nivel) {
         $this->SetFont('Arial','',10);
-        $this->Cell(3,5, ' ',0,0,'L',1);
-        $this->Cell(187,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total1,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(3,7, ' ',0,0,'L',1);
+        $this->Cell(187,7, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,7,number_format($this->total1,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total1=0;
     }
     public function lineaTotal2($nivel) {
         $this->SetFont('Arial','',10);
-        $this->Cell(5,5, ' ',0,0,'L',1);
-        $this->Cell(185,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total2,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(5,7, ' ',0,0,'L',1);
+        $this->Cell(185,7, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,7,number_format($this->total2,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total2=0;
     }
     public function lineaTotal3($nivel) {
         $this->SetFont('Arial','',10);
-        $this->Cell(8,5, ' ',0,0,'L',1);
-        $this->Cell(182,5, utf8_decode($nivel),0,0,'L',1);
-        $this->Cell(15,5,number_format($this->total3,2, ',', '.').' '.EURO,0,0,'R',1);
+        $this->Cell(8,7, ' ',0,0,'L',1);
+        $this->Cell(182,7, utf8_decode($nivel),0,0,'L',1);
+        $this->Cell(15,7,number_format($this->total3,2, ',', '.').' '.EURO,0,0,'R',1);
         $this->Ln();
         $this->total3=0;
     }

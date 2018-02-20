@@ -18,7 +18,15 @@
                     } 
                  });
     }
-    
+    function EliminarProveedoro(id) {
+            bootbox.confirm("Confirmar el Eliminar Proveedor " + id, 
+                 function(result){
+                     if (result) {
+                        var url =Routing.generate("deleteProveedor",{"id":id},true);
+                        window.location = url;
+                    } 
+                 });
+    }
     function CerrarEjercicio(id) {
             bootbox.confirm("Confirmar el Cierre de Ejercicio " + id, 
                  function(result){

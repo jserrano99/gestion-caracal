@@ -12,7 +12,8 @@
             "PersonaBundle\\": "src/PersonaBundle",
             "CataBundle\\": "src/CataBundle",
 			"CompeticionBundle\\": "src/CompeticionBundle",
-			"ContabilidadBundle\\":"src/ContabilidadBundle"
+			"ContabilidadBundle\\":"src/ContabilidadBundle",
+            "CorreoBundle\\":"src/CorreoBundle"
         },
         "classmap": [
             "app/AppKernel.php",

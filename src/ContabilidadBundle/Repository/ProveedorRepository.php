@@ -9,5 +9,15 @@ namespace ContabilidadBundle\Repository;
  */
 class ProveedorRepository extends \Doctrine\ORM\EntityRepository
 {
-    
+    public function siguienteProveedor() {
+        $em = $this->getEntityManager();
+		$db = $em->getConnection();
+        $query = " select count(*) as numero from cuentas_mayor where grupo_cuentas_id = 4";
+        $stmt = $db->prepare($query);
+		$params = [];
+		$stmt->execute($params);
+		$po = $stmt->fetch();
+        $codigo = "4000000".$po["numero"];
+        return $codigo;
+	}
 }

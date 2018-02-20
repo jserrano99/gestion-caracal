@@ -32,6 +32,7 @@ public function registerBundles()
 			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new ContabilidadBundle\ContabilidadBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new CorreoBundle\CorreoBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

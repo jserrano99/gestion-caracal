@@ -24,14 +24,17 @@ class PersonaController extends Controller
     
     public function QueryAction(){
        $EntityManager = $this->getDoctrine()->getManager();
+       
        $Persona_repo = $EntityManager->getRepository("PersonaBundle:Persona");
+       dump($Persona_repo);
+       die();
        $Personas = $Persona_repo->findAll();
 
         return $this->render('PersonaBundle:Persona:query.html.twig' , array (
             "Personas" => $Personas
         ));   
     } 
-	
+	 
     public function AddAction(Request $request){
        $EntityManager = $this->getDoctrine()->getManager();
        $Persona_repo = $EntityManager->getRepository("PersonaBundle:Persona");

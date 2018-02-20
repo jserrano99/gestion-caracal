@@ -104,8 +104,8 @@ class Balance extends \FPDF {
         $this->SetMargins(3,3);
         $this->image($this->rootDir.'/src/img/LogoCaracal.png',2,2,25,30);
         $this->SetFont('Arial','B',8);
-        $this->Cell(200,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
-        $this->Ln(5);
+//        $this->Cell(200,10,utf8_decode('Fecha Impresión: ').date('d/m/Y'),0,0,'R');
+//        $this->Ln(5);
         $this->SetFont('Arial','B',15);
         $this->Cell(210,10,'C.D.B CARACAL FUENLABRADA ',0,0,'C');
         $this->Ln(7);

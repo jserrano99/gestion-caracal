@@ -51,6 +51,24 @@ deleteProyecto:
     options:
         expose: true
 
+resumenProveedor:
+    path: /Contabilidad/Proveedor/Resumen/{id}
+    defaults: {_controller: ContabilidadBundle:Proveedor:resumen}
+queryProveedor:
+    path: /Contabilidad/Proveedor/Query
+    defaults: {_controller: ContabilidadBundle:Proveedor:Query}
+addProveedor:
+    path: /Contabilidad/Proveedor/Add
+    defaults: {_controller: ContabilidadBundle:Proveedor:Add}
+editProveedor:
+    path: /Contabilidad/Proveedor/Edit/{id}
+    defaults: {_controller: ContabilidadBundle:Proveedor:Edit}
+deleteProveedor:
+    path: /Contabilidad/Proveedor/Delete/{id}
+    defaults: {_controller: ContabilidadBundle:Proveedor:Delete}
+    options:
+        expose: true
+
 addApunte:
     path: /Contabilidad/Apunte/Add/{asiento_id}
     defaults: {_controller: ContabilidadBundle:Apunte:Add}
@@ -82,6 +100,9 @@ addAsientoIngreso:
 addAsientoGenerico:
     path: /Contabilidad/AsientoGenerico/Add
     defaults: {_controller: ContabilidadBundle:AsientoGenerico:Add}
+addAsientoIVA:
+    path: /Contabilidad/AsientoIVA/Add/{id}
+    defaults: {_controller: ContabilidadBundle:AsientoIVA:Add,id:null}
 
 editAsiento:
     path: /Contabilidad/Asiento/Edit/{id}/{ejercicio_id}

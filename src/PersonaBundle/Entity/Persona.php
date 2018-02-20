@@ -11,7 +11,7 @@ class Persona
     private $nombre;
 
     private $apellido1;
-
+ 
     private $apellido2;
 
     private $fcnac;
@@ -140,7 +140,7 @@ class Persona
     {
         return $this->domicilio;
     }
-	
+	 
 	public function setCdpostal($cdpostal)
     {
         $this->cdpostal = $cdpostal;

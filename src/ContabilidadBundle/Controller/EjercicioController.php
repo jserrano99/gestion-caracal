@@ -245,7 +245,6 @@ class EjercicioController extends Controller
         
         $EntityManager->persist($Asiento);
         $EntityManager->flush();
-        $this->SaldarIva($Asiento);
         $this->SaldarGastos($Asiento);
         $this->SaldarIngresos($Asiento);
 //        $this->SaldarCuentas($Asiento);
@@ -257,31 +256,7 @@ class EjercicioController extends Controller
  
     }
     
-    public function SaldarIVA($AsientoCierre) {
-        $em = $this->getDoctrine()->getManager();
-        
-        $Apunte_repo = $em->getRepository("ContabilidadBundle:Apunte");
-        $CuentaMayor_repo = $em->getRepository("ContabilidadBundle:CuentaMayor");
-        $CuentaMayorDebe = $CuentaMayor_repo->find(108); // 63410000 Gasto por iva Soportado
-        $CuentaMayorHaber = $CuentaMayor_repo->find(86); // 47200000 Hacienda Publica IVA Soportado
-                
-        $Apunte = new Apunte();
-        $Apunte->setAsiento($AsientoCierre);
-        $id = $AsientoCierre->getId();
-        $nm = $Apunte_repo->siguienteApunte($id);
-        $Apunte->setNumero($nm);
-        $Apunte->setDescripcion("Gasto por IVA Sportado");
-        $Apunte->setCuentaDebe($CuentaMayorDebe);
-        $importe = $Apunte_repo->sumaImporteDebe($AsientoCierre->getEjercicio()->getId(),86);
-        $Apunte->setImporteDebe($importe);
-        $Apunte->setCuentaHaber($CuentaMayorHaber);
-        $Apunte->setImporteHaber($importe);
-        
-        $em->persist($Apunte);
-        $em->flush();
-        return true;
-        
-    }
+   
 	
     public function SaldarGastos($AsientoCierre) {
         $em = $this->getDoctrine()->getManager();
